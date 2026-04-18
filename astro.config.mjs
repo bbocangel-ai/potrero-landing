@@ -3,7 +3,9 @@ import tailwind from '@astrojs/tailwind'
 
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://potrero.vercel.app',
+  // GitHub Pages URL — se actualiza automáticamente si después comprás dominio propio
+  site: 'https://bbocangel-ai.github.io',
+  base: '/potrero-landing',
   build: {
     inlineStylesheets: 'auto',
   },
