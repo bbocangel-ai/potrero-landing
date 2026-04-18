@@ -5,7 +5,7 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
 <nav class="sticky top-0 z-40 bg-earth-100/90 backdrop-blur-md border-b border-earth-200">
   <div class="container-prose flex items-center justify-between py-3">
     <a href="/" class="flex items-center gap-2.5" aria-label="Potrero">
-      <img src="/brand/isotipo-color.png" alt="" class="w-9 h-9 object-contain" />
+      <img src={`${import.meta.env.BASE_URL}brand/isotipo-color.png`.replace(/\/+/g, '/')} alt="" class="w-9 h-9 object-contain" />
       <span class="font-display font-medium text-[1.3rem] text-potrero-900 tracking-tight">
         Potrero
       </span>

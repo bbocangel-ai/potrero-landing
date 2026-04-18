@@ -5,7 +5,7 @@
   {/* Fondo foto productores */}
   <div class="absolute inset-0">
     <img
-      src="/fotos/04-productores.jpg"
+      src={`${import.meta.env.BASE_URL}fotos/04-productores.jpg`.replace(/\/+/g, '/')}
       alt=""
       class="w-full h-full object-cover"
       aria-hidden="true"
