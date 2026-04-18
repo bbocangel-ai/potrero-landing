@@ -149,6 +149,7 @@
       const data = Object.fromEntries(new FormData(form).entries())
 
       try {
+        // 1. Guardar en Supabase (base de datos estructurada)
         const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL
         const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY
         const res = await fetch(`${supabaseUrl}/rest/v1/survey_responses`, {
@@ -171,6 +172,34 @@
         })
 
         if (!res.ok) throw new Error('Error al enviar')
+
+        // 2. Notificación por email al equipo Potrero (best-effort, no bloquea)
+        // Formsubmit envía un email con los datos formateados — no requiere API key.
+        // En la primera respuesta recibida hay que confirmar el email haciendo click
+        // en el link que llega a info.potrerobo@gmail.com (solo una vez).
+        try {
+          await fetch('https://formsubmit.co/ajax/info.potrerobo@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              Nombre: data.nombre || '(sin nombre)',
+              WhatsApp: data.whatsapp,
+              Zona: data.zona || '—',
+              Superficie: data.superficie || '—',
+              'Gestión actual': data.gestion_actual || '—',
+              'Qué le cuesta más': data.dolor || '—',
+              'Quiere aviso de lanzamiento': data.aviso_lanzamiento === 'on' ? 'Sí' : 'No',
+              _subject: `🌾 Nueva respuesta encuesta Potrero — ${data.nombre || data.whatsapp}`,
+              _template: 'table',
+              _captcha: 'false',
+            }),
+          })
+        } catch {
+          // Email failed pero la respuesta ya está en Supabase — no afecta al usuario
+        }
 
         result.className =
           'rounded-xl bg-potrero-50 border border-potrero-200 px-4 py-4 text-potrero-800 text-sm'
