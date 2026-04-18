@@ -1,0 +1,193 @@
+---
+---
+
+<section id="encuesta" class="py-16 md:py-24 bg-earth-50 scroll-mt-16">
+  <div class="container-prose">
+    <div class="grid md:grid-cols-5 gap-10 md:gap-16">
+      {/* Copy — 2 columnas */}
+      <div class="md:col-span-2">
+        <p class="eyebrow mb-3">Sumate a la lista</p>
+        <span class="title-accent mb-6"></span>
+
+        <h2 class="font-display font-medium text-potrero-900 leading-[1.1] tracking-tight text-[2.25rem] md:text-[2.75rem] mb-6 mt-4">
+          Queremos conocerte <em class="italic text-earth-600">antes de lanzar.</em>
+        </h2>
+
+        <div class="space-y-4 text-potrero-800/80 leading-relaxed">
+          <p>
+            Potrero todavía está en desarrollo. Estamos hablando con productores
+            como vos para construir la herramienta que <span class="font-semibold text-potrero-900">realmente</span> necesitan.
+          </p>
+          <p>
+            Si te interesa, dejanos tus datos y contanos un poco de tu campo.
+            Cuando Potrero esté listo, sos de los primeros en saberlo.
+          </p>
+          <p class="text-sm text-earth-700 pt-2">
+            ⏱️ Te toma 2 minutos · Sin spam · Tus datos son tuyos.
+          </p>
+        </div>
+      </div>
+
+      {/* Formulario — 3 columnas */}
+      <form
+        id="survey-form"
+        class="md:col-span-3 bg-earth-100 border border-earth-200 rounded-2xl p-6 md:p-8 shadow-warm-sm space-y-5"
+      >
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="block text-sm font-semibold text-potrero-900 mb-1.5">Nombre</span>
+            <input
+              type="text"
+              name="nombre"
+              required
+              placeholder="Rafael Suárez"
+              class="w-full px-4 py-3 rounded-lg border border-earth-200 bg-white text-potrero-900 placeholder:text-earth-600/50 focus:border-earth-400 focus:outline-none transition"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-sm font-semibold text-potrero-900 mb-1.5">WhatsApp *</span>
+            <input
+              type="tel"
+              name="whatsapp"
+              required
+              placeholder="+591 7XXX XXXX"
+              class="w-full px-4 py-3 rounded-lg border border-earth-200 bg-white text-potrero-900 placeholder:text-earth-600/50 focus:border-earth-400 focus:outline-none transition"
+            />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">¿Dónde está tu estancia?</span>
+          <select
+            name="zona"
+            class="w-full px-4 py-3 rounded-lg border border-earth-200 bg-white text-potrero-900 focus:border-earth-400 focus:outline-none transition"
+          >
+            <option value="">Elegí una zona</option>
+            <option value="santa-cruz">Santa Cruz capital / Norte integrado</option>
+            <option value="chiquitania">Chiquitanía</option>
+            <option value="beni">Beni</option>
+            <option value="pando">Pando</option>
+            <option value="otro">Otra zona / otro país</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">Superficie ganadera aproximada</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {['<200 ha', '200-1.000', '1.000-5.000', '>5.000 ha'].map((opt) => (
+              <label class="flex items-center justify-center px-3 py-2.5 rounded-lg border border-earth-200 bg-white cursor-pointer hover:border-earth-400 has-[:checked]:border-potrero-600 has-[:checked]:bg-potrero-50 transition text-sm font-medium text-potrero-800">
+                <input type="radio" name="superficie" value={opt} class="sr-only" />
+                {opt}
+              </label>
+            ))}
+          </div>
+        </label>
+
+        <label class="block">
+          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">¿Cómo llevás tus números hoy?</span>
+          <select
+            name="gestion_actual"
+            class="w-full px-4 py-3 rounded-lg border border-earth-200 bg-white text-potrero-900 focus:border-earth-400 focus:outline-none transition"
+          >
+            <option value="">Elegí una opción</option>
+            <option value="excel">Excel / planillas</option>
+            <option value="cuaderno">Cuaderno / papel</option>
+            <option value="contador">Mi contador o asesor lo maneja</option>
+            <option value="nada">Nada sistemático, de memoria</option>
+            <option value="otro">Otro sistema</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">¿Qué te cuesta más hoy?</span>
+          <textarea
+            name="dolor"
+            rows="3"
+            placeholder="Por ejemplo: saber cuánto gasto por cabeza, llevar el control de los potreros, comparar gestiones, etc."
+            class="w-full px-4 py-3 rounded-lg border border-earth-200 bg-white text-potrero-900 placeholder:text-earth-600/50 focus:border-earth-400 focus:outline-none transition resize-none"
+          ></textarea>
+        </label>
+
+        <label class="flex items-start gap-2.5 cursor-pointer">
+          <input
+            type="checkbox"
+            name="aviso_lanzamiento"
+            checked
+            class="mt-1 w-4 h-4 rounded border-earth-300 text-potrero-700 focus:ring-earth-400"
+          />
+          <span class="text-sm text-potrero-800">
+            Sí, avisame por WhatsApp cuando Potrero esté disponible.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-primary w-full !py-3.5">
+          <span id="submit-label">Sumarme a la lista</span>
+          <svg id="submit-spinner" class="hidden animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25"/>
+            <path d="M22 12a10 10 0 01-10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <div id="survey-result" class="hidden"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('survey-form') as HTMLFormElement | null
+  const result = document.getElementById('survey-result') as HTMLDivElement | null
+  const submitLabel = document.getElementById('submit-label')
+  const submitSpinner = document.getElementById('submit-spinner')
+
+  if (form && result) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      submitLabel?.classList.add('hidden')
+      submitSpinner?.classList.remove('hidden')
+
+      const data = Object.fromEntries(new FormData(form).entries())
+
+      try {
+        const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL
+        const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+        const res = await fetch(`${supabaseUrl}/rest/v1/survey_responses`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+            Prefer: 'return=minimal',
+          },
+          body: JSON.stringify({
+            nombre: data.nombre,
+            whatsapp: data.whatsapp,
+            zona: data.zona,
+            superficie: data.superficie,
+            gestion_actual: data.gestion_actual,
+            dolor: data.dolor,
+            aviso_lanzamiento: data.aviso_lanzamiento === 'on',
+          }),
+        })
+
+        if (!res.ok) throw new Error('Error al enviar')
+
+        result.className =
+          'rounded-xl bg-potrero-50 border border-potrero-200 px-4 py-4 text-potrero-800 text-sm'
+        result.innerHTML =
+          '✅ <strong>¡Listo!</strong> Gracias por sumarte. Te escribimos por WhatsApp cuando Potrero esté disponible.'
+        result.classList.remove('hidden')
+        form.reset()
+      } catch {
+        result.className =
+          'rounded-xl bg-red-50 border border-red-200 px-4 py-4 text-red-700 text-sm'
+        result.innerHTML =
+          '⚠️ No pudimos enviar tu respuesta. Probá de nuevo o escribinos por WhatsApp.'
+        result.classList.remove('hidden')
+      } finally {
+        submitLabel?.classList.remove('hidden')
+        submitSpinner?.classList.add('hidden')
+      }
+    })
+  }
+</script>

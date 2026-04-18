@@ -1,0 +1,49 @@
+---
+const rows = [
+  { cat: 'Vacas preñadas',           inicial: 342, final: 358, delta: '+16' },
+  { cat: 'Vacas vacías',             inicial: 128, final: 104, delta: '−24' },
+  { cat: 'Terneras (<12m)',          inicial: 186, final: 201, delta: '+15' },
+  { cat: 'Terneros (<12m)',          inicial: 192, final: 212, delta: '+20' },
+  { cat: 'Vaquillas (13–24m)',       inicial: 94,  final: 87,  delta: '−7'  },
+  { cat: 'Toretes reproductores',    inicial: 6,   final: 8,   delta: '+2'  },
+]
+---
+
+<div class="relative w-full h-full min-h-[260px] bg-gradient-to-br from-earth-50 to-earth-100 p-5 flex items-center justify-center">
+  <div class="w-full max-w-[420px] bg-white rounded-xl shadow-warm-sm border border-earth-200 overflow-hidden">
+    {/* Fake header del app */}
+    <div class="flex items-center justify-between px-4 py-2.5 border-b border-earth-200 bg-earth-50/60">
+      <div class="flex items-center gap-2">
+        <div class="w-1.5 h-1.5 rounded-full bg-potrero-500"></div>
+        <span class="text-[0.7rem] font-bold uppercase tracking-wider text-potrero-700">
+          Inventario · Gestión 2025/26
+        </span>
+      </div>
+      <span class="text-[0.7rem] text-earth-600 font-medium">948 cab</span>
+    </div>
+
+    {/* Tabla */}
+    <table class="w-full text-[0.8rem]">
+      <thead>
+        <tr class="border-b border-earth-100">
+          <th class="text-left font-semibold text-earth-700 px-4 py-2">Categoría</th>
+          <th class="text-right font-semibold text-earth-700 px-3 py-2">Inicial</th>
+          <th class="text-right font-semibold text-earth-700 px-3 py-2">Final</th>
+          <th class="text-right font-semibold text-earth-700 px-4 py-2">Δ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr class={i % 2 === 0 ? 'bg-transparent' : 'bg-earth-50/40'}>
+            <td class="px-4 py-2 text-potrero-900 font-medium">{r.cat}</td>
+            <td class="px-3 py-2 text-right text-neutral-600 tabular-nums">{r.inicial}</td>
+            <td class="px-3 py-2 text-right text-potrero-900 font-semibold tabular-nums">{r.final}</td>
+            <td class={`px-4 py-2 text-right font-bold tabular-nums ${r.delta.startsWith('−') ? 'text-red-600' : 'text-potrero-600'}`}>
+              {r.delta}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>

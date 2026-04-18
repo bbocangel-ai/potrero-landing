@@ -1,0 +1,104 @@
+---
+// Layout de 7 potreros sobre una propiedad ficticia
+// Cada uno con un color según carga animal (UA/ha)
+const potreros = [
+  { id: 'P1', x: 20,  y: 30,  w: 120, h: 90,  ua: 1.2, label: 'Rotación' },
+  { id: 'P2', x: 145, y: 30,  w: 90,  h: 90,  ua: 0.8, label: 'Descanso' },
+  { id: 'P3', x: 240, y: 30,  w: 130, h: 60,  ua: 1.5, label: 'Vacas P.' },
+  { id: 'P4', x: 240, y: 95,  w: 130, h: 55,  ua: 0.6, label: 'Vacuos' },
+  { id: 'P5', x: 20,  y: 125, w: 105, h: 65,  ua: 1.1, label: 'Toretes' },
+  { id: 'P6', x: 130, y: 125, w: 105, h: 65,  ua: 0.9, label: 'Terneros' },
+  { id: 'P7', x: 240, y: 155, w: 130, h: 40,  ua: 1.3, label: 'Terneras' },
+]
+
+const colorFor = (ua: number) => {
+  if (ua >= 1.3) return '#C8A971' // dorado-paja (alta carga)
+  if (ua >= 1.0) return '#4E7D5A' // verde-claro
+  if (ua >= 0.7) return '#7BA588' // verde medio-suave
+  return '#A8C5B0'                 // verde-claro (baja)
+}
+---
+
+<div class="relative w-full h-full min-h-[260px] bg-gradient-to-br from-potrero-50 via-earth-50 to-earth-100 p-4 flex items-center justify-center overflow-hidden">
+  {/* Fondo tipo vegetación sutil */}
+  <div class="absolute inset-0 opacity-[0.08]" aria-hidden="true">
+    <svg viewBox="0 0 400 250" class="w-full h-full" preserveAspectRatio="xMidYMid slice">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <path
+          d={`M-20,${30 + i * 30} C80,${20 + i * 30} 180,${50 + i * 30} 280,${25 + i * 30} S420,${10 + i * 30} 500,${40 + i * 30}`}
+          fill="none"
+          stroke="#1E4230"
+          stroke-width="1"
+        />
+      ))}
+    </svg>
+  </div>
+
+  <div class="relative w-full max-w-[420px] bg-white rounded-xl shadow-warm-sm border border-earth-200 overflow-hidden">
+    <div class="px-4 py-2.5 border-b border-earth-200 bg-earth-50/60 flex items-center justify-between">
+      <span class="text-[0.7rem] font-bold uppercase tracking-wider text-potrero-700">
+        Estancia · 1.240 ha
+      </span>
+      <span class="text-[0.7rem] text-earth-600 font-medium">7 potreros</span>
+    </div>
+
+    <div class="p-3">
+      <svg viewBox="0 0 400 210" class="w-full h-auto">
+        {/* Contorno de la propiedad */}
+        <rect x="15" y="25" width="370" height="175" rx="6" fill="#FAF6EE" stroke="#1E4230" stroke-width="2" stroke-dasharray="4,3" />
+
+        {/* Potreros */}
+        {potreros.map((p) => (
+          <g>
+            <rect
+              x={p.x}
+              y={p.y}
+              width={p.w}
+              height={p.h}
+              rx="4"
+              fill={colorFor(p.ua)}
+              fill-opacity="0.75"
+              stroke="#1E4230"
+              stroke-width="1.2"
+            />
+            <text
+              x={p.x + p.w / 2}
+              y={p.y + p.h / 2 - 4}
+              text-anchor="middle"
+              fill="#0C1A10"
+              font-size="11"
+              font-weight="700"
+              font-family="DM Sans, sans-serif"
+            >
+              {p.id}
+            </text>
+            <text
+              x={p.x + p.w / 2}
+              y={p.y + p.h / 2 + 9}
+              text-anchor="middle"
+              fill="#0C1A10"
+              font-size="8"
+              font-family="DM Sans, sans-serif"
+              opacity="0.8"
+            >
+              {p.ua} UA/ha
+            </text>
+          </g>
+        ))}
+      </svg>
+
+      <div class="flex items-center gap-3 pt-2 border-t border-earth-100 text-[0.65rem] text-earth-700">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-sm" style="background:#A8C5B0"></span>Baja
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-sm" style="background:#4E7D5A"></span>Media
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-sm" style="background:#C8A971"></span>Alta
+        </span>
+        <span class="ml-auto">Carga animal UA/ha</span>
+      </div>
+    </div>
+  </div>
+</div>

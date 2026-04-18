@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+ * Base — Tierra Boliviana
+ * ─────────────────────────────────────────────────────────────
+ */
+@layer base {
+  html {
+    font-family: 'DM Sans', sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #F4EFE3;
+    color: #0C1A10;
+  }
+
+  /* Focus accesible con acento dorado */
+  *:focus-visible {
+    outline: 2px solid #C8A971;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * Utilidades tipográficas
+ * ─────────────────────────────────────────────────────────────
+ */
+@layer components {
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-earth-700;
+  }
+
+  .title-accent {
+    @apply inline-block w-12 h-0.5 bg-earth-400 rounded-sm mt-2;
+  }
+
+  .badge-stamp {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.7rem] font-bold uppercase
+           tracking-[0.08em] text-earth-700 border-[1.5px] border-earth-400 rounded
+           whitespace-nowrap;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl
+           bg-potrero-700 text-earth-100 font-semibold text-base
+           transition-all duration-200 shadow-warm
+           hover:bg-potrero-800 hover:-translate-y-0.5 hover:shadow-warm-lg
+           active:translate-y-0 active:shadow-warm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl
+           bg-transparent text-potrero-800 font-semibold text-base border-2 border-potrero-700
+           transition-all duration-200
+           hover:bg-potrero-700 hover:text-earth-100 hover:-translate-y-0.5;
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl
+           bg-[#25D366] text-white font-semibold text-base
+           transition-all duration-200 shadow-warm
+           hover:bg-[#1faf54] hover:-translate-y-0.5 hover:shadow-warm-lg;
+  }
+
+  .container-prose {
+    @apply max-w-6xl mx-auto px-5 md:px-8;
+  }
+}

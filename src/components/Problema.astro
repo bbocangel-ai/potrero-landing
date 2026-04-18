@@ -1,0 +1,119 @@
+---
+---
+
+<section class="py-16 md:py-24 bg-earth-100">
+  <div class="container-prose grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    {/* Copy */}
+    <div>
+      <p class="eyebrow mb-3">El problema</p>
+      <span class="title-accent mb-6"></span>
+
+      <h2 class="font-display font-medium text-potrero-900 leading-[1.1] tracking-tight text-[2.25rem] md:text-[2.75rem] mb-6 mt-4">
+        El Excel <em class="italic text-earth-600">no da más.</em>
+      </h2>
+
+      <div class="space-y-4 text-lg text-potrero-800/80 leading-relaxed">
+        <p>
+          Cargás ventas en una planilla. Gastos en otra.
+          Inventario en un cuaderno.
+        </p>
+        <p>
+          Y al final del año, para saber cuánto ganaste,
+          te ponés 3 días con la calculadora.
+        </p>
+        <p class="text-potrero-900 font-semibold pt-2">
+          Sabemos, porque lo vivimos. Por eso existe Potrero.
+        </p>
+      </div>
+    </div>
+
+    {/* Mapa estilizado — Santa Cruz, Bolivia */}
+    <div class="relative">
+      <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-warm-lg bg-gradient-to-br from-potrero-800 via-potrero-700 to-potrero-600 relative">
+        {/* Grid de campos visto desde arriba */}
+        <svg
+          viewBox="0 0 400 500"
+          class="absolute inset-0 w-full h-full"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+        >
+          <defs>
+            <pattern id="field-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <rect width="60" height="60" fill="#2A5438" />
+              <rect width="60" height="60" fill="url(#field-noise)" />
+            </pattern>
+            <linearGradient id="sky-gradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#4E7D5A" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#0C1A10" stop-opacity="0.7" />
+            </linearGradient>
+          </defs>
+
+          {/* Fondo base */}
+          <rect width="400" height="500" fill="#1E4230" />
+
+          {/* Celdas tipo potreros/cultivos — estilo aéreo de Santa Cruz */}
+          {Array.from({ length: 8 }).map((_, i) =>
+            Array.from({ length: 7 }).map((__, j) => {
+              const x = j * 60 - 10 + ((i % 2) * 4)
+              const y = i * 62 - 5
+              const shade = ['#3D6B48', '#2A5438', '#4E7D5A', '#162F23', '#3D6B48', '#1E4230'][(i + j) % 6]
+              return (
+                <rect
+                  x={x}
+                  y={y}
+                  width="56"
+                  height="58"
+                  fill={shade}
+                  stroke="#0C1A10"
+                  stroke-width="0.6"
+                  opacity={0.75 + ((i + j) % 3) * 0.08}
+                />
+              )
+            })
+          )}
+
+          {/* Caminos/cortafuegos diagonales */}
+          <path d="M-10,130 L420,105" stroke="#C8A971" stroke-width="1.5" opacity="0.4" stroke-dasharray="6,4" />
+          <path d="M-10,280 L420,310" stroke="#C8A971" stroke-width="1.5" opacity="0.4" stroke-dasharray="6,4" />
+          <path d="M130,-10 L160,520" stroke="#C8A971" stroke-width="1.5" opacity="0.35" stroke-dasharray="6,4" />
+
+          {/* Monte/serranía al horizonte */}
+          <path
+            d="M0,60 Q80,30 160,55 T320,50 T460,45 L460,0 L0,0 Z"
+            fill="url(#sky-gradient)"
+            opacity="0.5"
+          />
+
+          {/* Pin de ubicación */}
+          <g transform="translate(210, 260)">
+            <circle r="22" fill="#C8A971" opacity="0.25">
+              <animate attributeName="r" values="22;36;22" dur="2.8s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.25;0;0.25" dur="2.8s" repeatCount="indefinite" />
+            </circle>
+            <circle r="10" fill="#C8A971" stroke="#FAF6EE" stroke-width="2.5" />
+            <circle r="3.5" fill="#1E4230" />
+          </g>
+        </svg>
+
+        {/* Overlay con metadata */}
+        <div class="absolute inset-0 flex flex-col justify-between p-5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 bg-potrero-900/60 backdrop-blur-sm px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider text-earth-300 border border-earth-400/30">
+              <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
+              Santa Cruz · Bolivia
+            </span>
+            <span class="bg-potrero-900/60 backdrop-blur-sm px-2.5 py-1 rounded-md text-[0.65rem] font-mono text-earth-300/80 border border-earth-400/20">
+              17°48′S · 63°11′O
+            </span>
+          </div>
+
+          <div class="bg-earth-100/95 backdrop-blur-sm px-4 py-3 rounded-xl border border-earth-200 shadow-warm-lg">
+            <p class="eyebrow !text-[0.65rem]">Tierra ganadera</p>
+            <p class="font-display text-lg text-potrero-900 mt-0.5 leading-tight">Chiquitanía · Valle · Beni</p>
+            <p class="text-xs text-potrero-700/70 mt-1">El corazón de la ganadería boliviana.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+---
+const pasos = [
+  {
+    n: '01',
+    title: 'Cargás tu estancia',
+    desc: 'Una vez. Hectáreas, potreros, inventario inicial. Lo configurás en 15 minutos.',
+  },
+  {
+    n: '02',
+    title: 'Registrás el día a día',
+    desc: 'Ventas, compras, gastos, movimientos, lluvia. Donde estés, desde el celular.',
+  },
+  {
+    n: '03',
+    title: 'Ves tus números en vivo',
+    desc: 'Panel con tus KPIs en tiempo real. Compará gestiones, medí objetivos, decidí mejor.',
+  },
+]
+---
+
+<section class="py-16 md:py-24 bg-earth-50">
+  <div class="container-prose">
+    <div class="max-w-2xl mb-14">
+      <p class="eyebrow mb-3">Cómo funciona</p>
+      <span class="title-accent mb-6"></span>
+      <h2 class="font-display font-medium text-potrero-900 leading-[1.1] tracking-tight text-[2.25rem] md:text-[2.75rem] mt-4">
+        Tres pasos. <em class="italic text-earth-600">Nada más.</em>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+      {pasos.map((p) => (
+        <div class="relative">
+          <div class="font-display text-earth-400 text-[4rem] leading-none mb-4 tracking-tight">
+            {p.n}
+          </div>
+          <h3 class="font-display font-medium text-potrero-900 text-[1.55rem] mb-3 leading-tight">
+            {p.title}
+          </h3>
+          <p class="text-potrero-800/75 leading-relaxed text-[1rem]">
+            {p.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

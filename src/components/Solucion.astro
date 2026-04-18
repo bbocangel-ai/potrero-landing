@@ -1,0 +1,59 @@
+---
+---
+
+<section class="py-16 md:py-24 bg-potrero-900 relative overflow-hidden">
+  {/* Líneas decorativas de campo (topo-lines) */}
+  <svg
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full opacity-[0.08]"
+    viewBox="0 0 800 400"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    {Array.from({ length: 10 }).map((_, i) => (
+      <path
+        d={`M-80,${40 + i * 40} C150,${20 + i * 40} 350,${70 + i * 40} 500,${30 + i * 40} S800,${10 + i * 40} 900,${50 + i * 40}`}
+        fill="none"
+        stroke="#E8DCC4"
+        stroke-width="0.8"
+      />
+    ))}
+  </svg>
+
+  <div class="container-prose relative z-10">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-earth-400 text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-3">
+        La solución
+      </p>
+
+      <h2 class="font-display font-medium text-white leading-[1.1] tracking-tight text-[2.5rem] md:text-[3.5rem] mb-8">
+        Sabé <em class="italic text-earth-400">exactamente</em><br />
+        cuánto te sale cada kilo.
+      </h2>
+
+      {/* KPI estrella visual */}
+      <div class="inline-flex flex-col items-center gap-3 bg-potrero-800/60 backdrop-blur-sm rounded-2xl px-10 py-8 border border-earth-400/20 mb-10">
+        <span class="eyebrow !text-earth-400">Costo por kilo producido</span>
+        <p class="font-display font-medium text-earth-400 tabular-nums leading-none"
+           style="font-size: clamp(3.5rem, 7vw, 5rem);">
+          $ 1.85<span class="text-3xl text-earth-300/70 ml-1">/kg</span>
+        </p>
+        <div class="flex items-center gap-4 mt-2 text-sm text-earth-200/70">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-earth-400"></span>
+            Directos: $1.12
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-earth-300"></span>
+            Indirectos: $0.73
+          </span>
+        </div>
+      </div>
+
+      <p class="text-lg md:text-xl text-earth-200/80 leading-relaxed max-w-2xl mx-auto">
+        Potrero agarra todos tus gastos, los cruza con la carne que produjiste, y te dice
+        <span class="text-earth-300 font-semibold">en una pantalla</span>
+        qué tan rentable es tu campo. Sin Excel. Sin asesor. Sin esperar fin de año.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,59 @@
+---
+import InventoryMockup from './mockups/InventoryMockup.astro'
+import EconomyMockup from './mockups/EconomyMockup.astro'
+import PaddocksMockup from './mockups/PaddocksMockup.astro'
+import RainfallMockup from './mockups/RainfallMockup.astro'
+
+const features = [
+  {
+    title: 'Inventario ganadero',
+    desc: 'Cabezas por categoría, movimientos entrantes y salientes, desbaste automático. Las 13 categorías ganaderas en una sola pantalla.',
+    Component: InventoryMockup,
+  },
+  {
+    title: 'Gastos y economía',
+    desc: 'Cargás los gastos cuando los hacés. Los ves agrupados por mes, por categoría y en la cascada económica completa.',
+    Component: EconomyMockup,
+  },
+  {
+    title: 'Potreros y carga',
+    desc: 'Dibujás los potreros sobre el mapa. Potrero calcula UA/ha por potrero y te muestra con colores la carga animal de toda la estancia.',
+    Component: PaddocksMockup,
+  },
+  {
+    title: 'Pluviometría',
+    desc: 'Registrás la lluvia mes a mes. Ves el acumulado, compará gestiones y detectás sequías antes de que afecten al ganado.',
+    Component: RainfallMockup,
+  },
+]
+---
+
+<section class="py-16 md:py-24 bg-earth-100">
+  <div class="container-prose">
+    <div class="max-w-2xl mb-10 md:mb-14">
+      <p class="eyebrow mb-3">Qué hace Potrero</p>
+      <span class="title-accent mb-6"></span>
+      <h2 class="font-display font-medium text-potrero-900 leading-[1.1] tracking-tight text-[2.25rem] md:text-[2.75rem] mt-4">
+        Todo lo que tu campo necesita, <em class="italic text-earth-600">en un solo lugar.</em>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+      {features.map(({ title, desc, Component }) => (
+        <article class="group relative bg-earth-50 border border-earth-200 rounded-2xl overflow-hidden shadow-warm-sm hover:shadow-warm-lg transition-all duration-300 hover:-translate-y-1">
+          <div class="aspect-[16/10]">
+            <Component />
+          </div>
+          <div class="p-5 md:p-6 border-t border-earth-200">
+            <h3 class="font-display font-medium text-potrero-900 text-[1.35rem] mb-2 leading-tight">
+              {title}
+            </h3>
+            <p class="text-potrero-800/70 leading-relaxed text-[0.95rem]">
+              {desc}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

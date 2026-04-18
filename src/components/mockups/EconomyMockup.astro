@@ -1,0 +1,74 @@
+---
+// Gastos mensuales simulados (USD, miles)
+const months = [
+  { m: 'Jul', v: 4.8 },
+  { m: 'Ago', v: 6.2 },
+  { m: 'Sep', v: 3.9 },
+  { m: 'Oct', v: 5.5 },
+  { m: 'Nov', v: 7.1 },
+  { m: 'Dic', v: 8.4 },
+  { m: 'Ene', v: 6.8 },
+  { m: 'Feb', v: 5.2 },
+]
+const max = Math.max(...months.map((x) => x.v))
+const total = months.reduce((acc, x) => acc + x.v, 0).toFixed(1)
+---
+
+<div class="relative w-full h-full min-h-[260px] bg-gradient-to-br from-earth-50 to-earth-100 p-5 flex items-center justify-center">
+  <div class="w-full max-w-[420px] bg-white rounded-xl shadow-warm-sm border border-earth-200 overflow-hidden">
+    {/* Header */}
+    <div class="px-4 py-3 border-b border-earth-200 bg-earth-50/60">
+      <div class="flex items-center justify-between">
+        <span class="text-[0.7rem] font-bold uppercase tracking-wider text-potrero-700">
+          Gastos mensuales
+        </span>
+        <span class="text-[0.7rem] text-earth-600 font-medium">USD</span>
+      </div>
+      <div class="flex items-baseline gap-2 mt-1.5">
+        <span class="font-display text-[1.5rem] font-medium text-potrero-900 tabular-nums">
+          ${total}k
+        </span>
+        <span class="text-[0.7rem] text-earth-600">acumulado</span>
+      </div>
+    </div>
+
+    {/* Chart */}
+    <div class="p-4">
+      {/* Barras con altura en píxeles (contenedor de 120px) */}
+      <div class="flex items-end justify-between gap-1.5" style="height: 120px;">
+        {months.map((x) => {
+          const barPx = Math.max(6, Math.round((x.v / max) * 108))
+          return (
+            <div
+              class="flex-1 rounded-t-md"
+              style={`height: ${barPx}px; background: linear-gradient(to top, #1E4230 0%, #3D6B48 60%, #4E7D5A 100%);`}
+              aria-hidden="true"
+            ></div>
+          )
+        })}
+      </div>
+      {/* Etiquetas de meses debajo */}
+      <div class="flex justify-between gap-1.5 mt-2">
+        {months.map((x) => (
+          <span class="flex-1 text-center text-[0.6rem] text-earth-700 font-medium">{x.m}</span>
+        ))}
+      </div>
+
+      {/* Leyenda tipo categorías */}
+      <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 pt-3 border-t border-earth-100 text-[0.7rem]">
+        <span class="inline-flex items-center gap-1.5 text-earth-700">
+          <span class="w-2 h-2 rounded-full bg-potrero-600"></span>
+          Alimentación 42%
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-earth-700">
+          <span class="w-2 h-2 rounded-full bg-earth-400"></span>
+          Sanidad 28%
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-earth-700">
+          <span class="w-2 h-2 rounded-full bg-potrero-400"></span>
+          Personal 18%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
