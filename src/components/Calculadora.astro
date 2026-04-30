@@ -1,0 +1,326 @@
+---
+---
+
+<section id="calculadora" class="py-16 md:py-24 bg-potrero-900 relative overflow-hidden scroll-mt-16">
+
+  {/* Glow decorativo */}
+  <div aria-hidden="true" class="pointer-events-none absolute -top-60 -right-60 w-[600px] h-[600px] rounded-full"
+    style="background: radial-gradient(circle, rgba(200,169,113,0.12) 0%, transparent 65%);">
+  </div>
+  <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full"
+    style="background: radial-gradient(circle, rgba(30,66,48,0.6) 0%, transparent 65%);">
+  </div>
+
+  <div class="container-prose relative z-10">
+
+    {/* Header */}
+    <div class="max-w-2xl mb-10 md:mb-14">
+      <p class="text-earth-400 text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-3">
+        Calculadora
+      </p>
+      <span class="inline-block w-12 h-0.5 bg-earth-500 rounded-sm mb-6"></span>
+      <h2 class="font-display font-medium text-white leading-[1.08] tracking-tight text-[2.25rem] md:text-[3rem] mt-2">
+        ¿Cuánto te cuesta<br />
+        <em class="italic text-earth-400">no saber tus números?</em>
+      </h2>
+      <p class="text-earth-200/70 text-base md:text-lg leading-relaxed mt-5 max-w-lg">
+        Ingresá los datos de tu estancia y descubrí tu costo real por cabeza, tu carga animal y cuánto podrías optimizar con Potrero.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+
+      {/* ── PANEL INPUTS ────────────────────────────── */}
+      <div class="lg:col-span-2 bg-potrero-800/60 border border-potrero-700/60 rounded-2xl p-6 md:p-7 space-y-7 backdrop-blur-sm">
+
+        {/* Cabezas */}
+        <div>
+          <div class="flex justify-between items-baseline mb-3">
+            <label for="sl-cabezas" class="text-earth-300 text-sm font-semibold">Cabezas de ganado</label>
+            <span class="text-earth-400 text-xs font-medium bg-potrero-700/60 px-2.5 py-1 rounded-lg">
+              <span id="lbl-cabezas">300</span> cab.
+            </span>
+          </div>
+          <input id="sl-cabezas" type="range" min="50" max="3000" step="50" value="300"
+            class="calc-slider w-full" aria-label="Cabezas de ganado" />
+          <div class="flex justify-between text-earth-600 text-xs mt-1.5">
+            <span>50</span><span>3 000</span>
+          </div>
+        </div>
+
+        {/* Hectáreas */}
+        <div>
+          <div class="flex justify-between items-baseline mb-3">
+            <label for="sl-ha" class="text-earth-300 text-sm font-semibold">Superficie ganadera</label>
+            <span class="text-earth-400 text-xs font-medium bg-potrero-700/60 px-2.5 py-1 rounded-lg">
+              <span id="lbl-ha">1 500</span> ha
+            </span>
+          </div>
+          <input id="sl-ha" type="range" min="100" max="10000" step="100" value="1500"
+            class="calc-slider w-full" aria-label="Hectáreas ganaderas" />
+          <div class="flex justify-between text-earth-600 text-xs mt-1.5">
+            <span>100 ha</span><span>10 000 ha</span>
+          </div>
+        </div>
+
+        {/* Gastos */}
+        <div>
+          <div class="flex justify-between items-baseline mb-3">
+            <label for="sl-gastos" class="text-earth-300 text-sm font-semibold">Gastos anuales estimados</label>
+            <span class="text-earth-400 text-xs font-medium bg-potrero-700/60 px-2.5 py-1 rounded-lg">
+              $us <span id="lbl-gastos">75 000</span>
+            </span>
+          </div>
+          <input id="sl-gastos" type="range" min="5000" max="500000" step="5000" value="75000"
+            class="calc-slider w-full" aria-label="Gastos anuales en dólares" />
+          <div class="flex justify-between text-earth-600 text-xs mt-1.5">
+            <span>$us 5 000</span><span>$us 500 000</span>
+          </div>
+        </div>
+
+        {/* Nota */}
+        <p class="text-earth-600 text-xs leading-relaxed border-t border-potrero-700/40 pt-5">
+          Estimación con benchmarks productivos del trópico boliviano. Los resultados son orientativos — Potrero te da los números reales de <em>tu</em> campo.
+        </p>
+      </div>
+
+      {/* ── PANEL RESULTADOS ────────────────────────── */}
+      <div class="lg:col-span-3 space-y-4">
+
+        {/* Fila 1: Costo/cabeza + Carga animal */}
+        <div class="grid sm:grid-cols-2 gap-4">
+
+          {/* Costo por cabeza */}
+          <div class="bg-potrero-800/60 border border-potrero-700/60 rounded-2xl p-5 backdrop-blur-sm">
+            <p class="text-earth-500 text-xs font-semibold uppercase tracking-wider mb-1">Costo / cabeza / año</p>
+            <p class="text-white text-3xl font-bold tracking-tight mt-2">
+              $us <span id="out-costo-cab">250</span>
+            </p>
+            <div id="badge-costo" class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full">
+            </div>
+            <p class="text-earth-600 text-xs mt-2">Benchmark sectorial: $us 220–280 / cab.</p>
+          </div>
+
+          {/* Carga animal */}
+          <div class="bg-potrero-800/60 border border-potrero-700/60 rounded-2xl p-5 backdrop-blur-sm">
+            <p class="text-earth-500 text-xs font-semibold uppercase tracking-wider mb-1">Carga animal</p>
+            <p class="text-white text-3xl font-bold tracking-tight mt-2">
+              <span id="out-carga">0.16</span> <span class="text-lg font-normal text-earth-400">UA/ha</span>
+            </p>
+            <div id="badge-carga" class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full">
+            </div>
+            <p class="text-earth-600 text-xs mt-2">Óptimo trópico boliviano: 0.7 – 1.1 UA/ha</p>
+          </div>
+        </div>
+
+        {/* Costo total / ha */}
+        <div class="bg-potrero-800/60 border border-potrero-700/60 rounded-2xl p-5 backdrop-blur-sm">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-earth-500 text-xs font-semibold uppercase tracking-wider mb-1">Gasto total por hectárea</p>
+              <p class="text-white text-3xl font-bold tracking-tight mt-1">
+                $us <span id="out-costo-ha">50</span>
+                <span class="text-lg font-normal text-earth-400"> / ha / año</span>
+              </p>
+            </div>
+            {/* Mini bar */}
+            <div class="hidden sm:flex flex-col items-end gap-1.5 shrink-0">
+              <div class="flex items-end gap-1.5 h-12">
+                <div class="flex flex-col justify-end items-center gap-0.5">
+                  <div id="bar-actual" class="w-7 rounded-t-md bg-earth-400/70 transition-all duration-300" style="height:40px"></div>
+                  <span class="text-earth-600 text-[10px]">Actual</span>
+                </div>
+                <div class="flex flex-col justify-end items-center gap-0.5">
+                  <div id="bar-potrero" class="w-7 rounded-t-md bg-earth-400 transition-all duration-300" style="height:34px"></div>
+                  <span class="text-earth-500 text-[10px]">Potrero</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Ahorro potencial — card destacada */}
+        <div class="bg-gradient-to-br from-earth-700/30 to-earth-600/20 border border-earth-500/40 rounded-2xl p-6 relative overflow-hidden">
+          <div aria-hidden="true" class="absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2"
+            style="background: radial-gradient(circle, rgba(200,169,113,0.18) 0%, transparent 70%);">
+          </div>
+          <p class="text-earth-400 text-xs font-bold uppercase tracking-widest mb-1">Oportunidad de optimización</p>
+          <div class="flex items-end gap-3 mt-2">
+            <p class="text-earth-300 text-4xl md:text-5xl font-bold tracking-tight leading-none">
+              $us <span id="out-ahorro">7 500</span>
+            </p>
+            <span class="text-earth-500 text-sm mb-1">/ año estimados</span>
+          </div>
+          <p class="text-earth-400/80 text-sm mt-3 leading-relaxed max-w-md">
+            El promedio de estancias que empiezan a medir con Potrero identifican entre un
+            <strong class="text-earth-300">8 % y 15 %</strong> de gastos optimizables en los primeros 6 meses.
+          </p>
+          <a href="#encuesta"
+            class="mt-5 inline-flex items-center gap-2 bg-earth-500 hover:bg-earth-400 text-potrero-950 text-sm font-bold px-5 py-2.5 rounded-xl transition-colors duration-200">
+            Quiero mis números reales
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Custom range slider ── */
+  .calc-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(
+      to right,
+      #C8A971 0%,
+      #C8A971 var(--pct, 10%),
+      rgba(255,255,255,0.12) var(--pct, 10%),
+      rgba(255,255,255,0.12) 100%
+    );
+  }
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #C8A971;
+    border: 2px solid #F4EFE3;
+    box-shadow: 0 0 0 3px rgba(200,169,113,0.25);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+  .calc-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(200,169,113,0.35);
+  }
+  .calc-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #C8A971;
+    border: 2px solid #F4EFE3;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  // ── Benchmarks ──────────────────────────────────────
+  const BENCH_COSTO_CAB_MIN = 220   // $us/cab/año
+  const BENCH_COSTO_CAB_MAX = 280
+  const BENCH_CARGA_MIN = 0.7       // UA/ha
+  const BENCH_CARGA_MAX = 1.1
+  const UA_POR_CABEZA = 0.8         // promedio vaca cría
+  const OPTIMIZATION_PCT = 0.10    // 10 % conservador
+
+  // ── DOM ──────────────────────────────────────────────
+  const slCabezas = document.getElementById('sl-cabezas') as HTMLInputElement
+  const slHa      = document.getElementById('sl-ha')      as HTMLInputElement
+  const slGastos  = document.getElementById('sl-gastos')  as HTMLInputElement
+
+  const lblCabezas = document.getElementById('lbl-cabezas')!
+  const lblHa      = document.getElementById('lbl-ha')!
+  const lblGastos  = document.getElementById('lbl-gastos')!
+
+  const outCostoCab = document.getElementById('out-costo-cab')!
+  const outCarga    = document.getElementById('out-carga')!
+  const outCostoHa  = document.getElementById('out-costo-ha')!
+  const outAhorro   = document.getElementById('out-ahorro')!
+
+  const badgeCosto = document.getElementById('badge-costo')!
+  const badgeCarga = document.getElementById('badge-carga')!
+
+  const barActual  = document.getElementById('bar-actual')  as HTMLDivElement
+  const barPotrero = document.getElementById('bar-potrero') as HTMLDivElement
+
+  // ── Format helpers ───────────────────────────────────
+  const fmt = (n: number) => Math.round(n).toLocaleString('es-BO')
+
+  function sliderPct(el: HTMLInputElement) {
+    const pct = ((+el.value - +el.min) / (+el.max - +el.min)) * 100
+    el.style.setProperty('--pct', pct + '%')
+  }
+
+  type BadgeState = 'ok' | 'warn' | 'danger'
+  function setBadge(el: HTMLElement, state: BadgeState, text: string) {
+    const map: Record<BadgeState, string> = {
+      ok:     'bg-green-900/60 text-green-300 border border-green-700/60',
+      warn:   'bg-amber-900/50 text-amber-300 border border-amber-700/50',
+      danger: 'bg-red-900/50 text-red-300 border border-red-700/50',
+    }
+    const icon: Record<BadgeState, string> = {
+      ok: '✓', warn: '⚠', danger: '↑'
+    }
+    el.className = `inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${map[state]}`
+    el.textContent = `${icon[state]} ${text}`
+  }
+
+  // ── Main calculation ─────────────────────────────────
+  function calc() {
+    const cabezas = +slCabezas.value
+    const ha      = +slHa.value
+    const gastos  = +slGastos.value
+
+    // Labels
+    lblCabezas.textContent = fmt(cabezas)
+    lblHa.textContent      = fmt(ha)
+    lblGastos.textContent  = fmt(gastos)
+
+    // Slider fill
+    sliderPct(slCabezas)
+    sliderPct(slHa)
+    sliderPct(slGastos)
+
+    // KPIs
+    const costoCab = gastos / cabezas
+    const uaTotal  = cabezas * UA_POR_CABEZA
+    const carga    = uaTotal / ha
+    const costoHa  = gastos / ha
+    const ahorro   = gastos * OPTIMIZATION_PCT
+
+    // Update values
+    outCostoCab.textContent = fmt(costoCab)
+    outCarga.textContent    = carga.toFixed(2)
+    outCostoHa.textContent  = fmt(costoHa)
+    outAhorro.textContent   = fmt(ahorro)
+
+    // Badge costo/cab
+    if (costoCab < BENCH_COSTO_CAB_MIN)
+      setBadge(badgeCosto, 'ok', 'Bajo el benchmark')
+    else if (costoCab <= BENCH_COSTO_CAB_MAX)
+      setBadge(badgeCosto, 'ok', 'Dentro del benchmark')
+    else
+      setBadge(badgeCosto, 'danger', 'Por encima del benchmark')
+
+    // Badge carga animal
+    if (carga < BENCH_CARGA_MIN)
+      setBadge(badgeCarga, 'warn', 'Sub-utilización del campo')
+    else if (carga <= BENCH_CARGA_MAX)
+      setBadge(badgeCarga, 'ok', 'Carga óptima')
+    else
+      setBadge(badgeCarga, 'danger', 'Sobre-carga animal')
+
+    // Mini bar chart (max 48px)
+    const MAX_H = 48
+    const actualH = Math.min(MAX_H, Math.round((costoHa / 120) * MAX_H))
+    const potreroH = Math.round(actualH * (1 - OPTIMIZATION_PCT))
+    barActual.style.height  = Math.max(6, actualH)  + 'px'
+    barPotrero.style.height = Math.max(6, potreroH) + 'px'
+  }
+
+  // ── Listeners ────────────────────────────────────────
+  ;[slCabezas, slHa, slGastos].forEach(el => el.addEventListener('input', calc))
+
+  // ── Init ─────────────────────────────────────────────
+  sliderPct(slCabezas)
+  sliderPct(slHa)
+  sliderPct(slGastos)
+  calc()
+</script>
