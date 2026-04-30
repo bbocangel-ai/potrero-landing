@@ -201,12 +201,43 @@
           // Email failed pero la respuesta ya está en Supabase — no afecta al usuario
         }
 
+        // 3. Construir mensaje de WhatsApp con datos del usuario para contexto
+        const zonaTxt = (data.zona as string)?.replace('santa-cruz', 'Santa Cruz / Norte integrado')
+          .replace('chiquitania', 'Chiquitanía')
+          .replace('beni', 'Beni')
+          .replace('pando', 'Pando')
+          .replace('otro', 'otra zona') || ''
+        const gestionTxt = (data.gestion_actual as string)?.replace('excel', 'Excel / planillas')
+          .replace('cuaderno', 'cuaderno / papel')
+          .replace('contador', 'mi contador o asesor')
+          .replace('nada', 'nada sistemático')
+          .replace('otro', 'otro sistema') || ''
+
+        const lineas = [
+          `Hola Potrero, soy ${data.nombre || '(sin nombre)'} 👋`,
+          `Me sumé a la lista por la encuesta de la web.`,
+          '',
+          zonaTxt    ? `📍 Zona: ${zonaTxt}` : '',
+          data.superficie     ? `📐 Superficie: ${data.superficie}` : '',
+          gestionTxt ? `📊 Hoy llevo mis números con: ${gestionTxt}` : '',
+          data.dolor          ? `❗ Lo que más me cuesta: ${data.dolor}` : '',
+        ].filter(Boolean).join('\n')
+
+        const waText = encodeURIComponent(lineas)
+        const waUrl = `https://wa.me/59177423154?text=${waText}`
+
         result.className =
           'rounded-xl bg-potrero-50 border border-potrero-200 px-4 py-4 text-potrero-800 text-sm'
         result.innerHTML =
-          '✅ <strong>¡Listo!</strong> Gracias por sumarte. Te escribimos por WhatsApp cuando Potrero esté disponible.'
+          '✅ <strong>¡Listo!</strong> Te abrimos WhatsApp para terminar de conocernos…'
         result.classList.remove('hidden')
         form.reset()
+
+        // 4. Abrir WhatsApp con el mensaje pre-cargado en una nueva pestaña
+        // Pequeño delay para que el usuario vea el mensaje de éxito
+        setTimeout(() => {
+          window.open(waUrl, '_blank', 'noopener,noreferrer')
+        }, 700)
       } catch {
         result.className =
           'rounded-xl bg-red-50 border border-red-200 px-4 py-4 text-red-700 text-sm'
