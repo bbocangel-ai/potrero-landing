@@ -1,0 +1,592 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const isotipoSrc = `${import.meta.env.BASE_URL}brand/isotipo-color.png`.replace(/\/+/g, '/')
+const landingUrl = `${import.meta.env.BASE_URL}`.replace(/\/+$/, '/')
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
+---
+
+<Layout
+  title="Calculadora de Agio Ganadero — Potrero"
+  description="Calculá el diferencial compra-venta de tu lote ganadero. Costo de producción, margen y ROI en Bs. Herramienta gratuita de Potrero."
+>
+  <div class="min-h-screen bg-earth-50 font-sans">
+
+    {/* ── HEADER ──────────────────────────────────────── */}
+    <header class="bg-potrero-900 text-white px-5 py-4 flex items-center justify-between gap-4 sticky top-0 z-40 shadow-lg">
+      <a href={landingUrl} class="flex items-center gap-2.5">
+        <img src={isotipoSrc} alt="Potrero" class="w-8 h-8 object-contain" />
+        <span class="font-display font-medium text-[1.15rem] tracking-tight leading-none">Potrero</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-earth-400 border border-earth-600/50 px-3 py-1.5 rounded-full">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          Herramienta gratuita
+        </span>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+          class="text-xs font-semibold bg-[#25D366] hover:bg-[#1faf54] text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Consultas
+        </a>
+      </div>
+    </header>
+
+    {/* ── HERO TITLE ───────────────────────────────────── */}
+    <div class="bg-potrero-900 text-white px-5 pt-6 pb-8 text-center border-b border-potrero-800">
+      <h1 class="font-display font-medium text-[1.75rem] md:text-[2.25rem] tracking-tight leading-tight">
+        Calculadora de <em class="italic text-earth-400">Agio Ganadero</em>
+      </h1>
+      <p class="text-earth-300/70 text-sm mt-2">
+        Diferencial compra-venta · Costo de producción · Margen y ROI en <strong class="text-earth-300">Bs</strong>
+      </p>
+    </div>
+
+    {/* ── MAIN LAYOUT ─────────────────────────────────── */}
+    <div class="max-w-5xl mx-auto px-4 py-6 md:py-8 grid lg:grid-cols-[1fr_340px] gap-5 items-start">
+
+      {/* ── FORMULARIO ─────────────────────────────────── */}
+      <div class="space-y-4" id="calc-form">
+
+        {/* SECCIÓN 1: Lote e inversión */}
+        <div class="calc-section" id="sec-lote">
+          <button type="button" class="sec-header" aria-expanded="true" aria-controls="body-lote">
+            <div class="flex items-center gap-3">
+              <div class="sec-icon bg-potrero-100 text-potrero-700">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-potrero-900 text-sm leading-none">Lote e Inversión</p>
+                <p id="tag-lote" class="text-earth-600 text-xs mt-0.5">100 cab. · Bs 250/kg PV</p>
+              </div>
+            </div>
+            <svg class="sec-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+          <div id="body-lote" class="sec-body">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="field-group">
+                <label for="f-tipo">Tipo de operación</label>
+                <select id="f-tipo" name="tipo">
+                  <option value="engorde">Engorde</option>
+                  <option value="recria">Recría</option>
+                  <option value="ciclo">Ciclo completo</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="f-cabezas">Cantidad de cabezas</label>
+                <div class="input-suffix">
+                  <input id="f-cabezas" type="number" min="1" value="100" placeholder="100" />
+                  <span>cab.</span>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-peso-ini">Peso inicial promedio</label>
+                <div class="input-suffix">
+                  <input id="f-peso-ini" type="number" min="1" value="280" placeholder="280" />
+                  <span>kg PV</span>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-precio-compra">Precio de compra</label>
+                <div class="input-prefix">
+                  <span>Bs/kg</span>
+                  <input id="f-precio-compra" type="number" min="0" step="0.5" value="18" placeholder="18" />
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 bg-earth-100 rounded-xl px-4 py-3 flex flex-wrap gap-x-6 gap-y-1.5 text-sm">
+              <span class="text-earth-600">Inversión compra:</span>
+              <span class="font-semibold text-potrero-900">Bs <span id="calc-inv-cab">5 040</span>/cab · Bs <span id="calc-inv-lote">504 000</span> lote</span>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN 2: Ciclo productivo */}
+        <div class="calc-section" id="sec-ciclo">
+          <button type="button" class="sec-header" aria-expanded="true" aria-controls="body-ciclo">
+            <div class="flex items-center gap-3">
+              <div class="sec-icon bg-amber-50 text-amber-700">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-potrero-900 text-sm leading-none">Ciclo Productivo</p>
+                <p id="tag-ciclo" class="text-earth-600 text-xs mt-0.5">180 días · GMD 0.700 kg/día</p>
+              </div>
+            </div>
+            <svg class="sec-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+          <div id="body-ciclo" class="sec-body">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="field-group">
+                <label for="f-dias">Duración del ciclo</label>
+                <div class="input-suffix">
+                  <input id="f-dias" type="number" min="1" value="180" placeholder="180" />
+                  <span>días</span>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-gmd">GMD – Ganancia Media Diaria</label>
+                <div class="input-suffix">
+                  <input id="f-gmd" type="number" min="0" step="0.05" value="0.700" placeholder="0.700" />
+                  <span>kg/día</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 bg-earth-100 rounded-xl px-4 py-3 grid grid-cols-3 gap-3 text-center text-sm">
+              <div>
+                <p class="text-earth-500 text-xs mb-0.5">Peso inicial</p>
+                <p class="font-bold text-potrero-900"><span id="calc-p-ini">280</span> kg</p>
+              </div>
+              <div class="border-x border-earth-200">
+                <p class="text-earth-500 text-xs mb-0.5">Ganancia</p>
+                <p class="font-bold text-green-700">+<span id="calc-ganancia">126</span> kg</p>
+              </div>
+              <div>
+                <p class="text-earth-500 text-xs mb-0.5">Peso final</p>
+                <p class="font-bold text-potrero-900"><span id="calc-p-fin">406</span> kg</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN 3: Costos del ciclo */}
+        <div class="calc-section" id="sec-costos">
+          <button type="button" class="sec-header" aria-expanded="true" aria-controls="body-costos">
+            <div class="flex items-center gap-3">
+              <div class="sec-icon bg-red-50 text-red-600">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-potrero-900 text-sm leading-none">Costos del Ciclo</p>
+                <p id="tag-costos" class="text-earth-600 text-xs mt-0.5">Total: Bs <span id="tag-costos-total">0</span>/cab</p>
+              </div>
+            </div>
+            <svg class="sec-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+          <div id="body-costos" class="sec-body">
+            <p class="text-xs text-earth-500 mb-4">Todos los valores son <strong>por cabeza / mes</strong> salvo que se indique lo contrario.</p>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="field-group">
+                <label for="f-alim">Alimentación / suplementación</label>
+                <div class="input-prefix">
+                  <span>Bs/cab/mes</span>
+                  <input id="f-alim" type="number" min="0" step="10" value="0" placeholder="0" />
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-mo">Mano de obra</label>
+                <div class="input-prefix">
+                  <span>Bs/cab/mes</span>
+                  <input id="f-mo" type="number" min="0" step="5" value="0" placeholder="0" />
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-sanidad">Sanidad / veterinario</label>
+                <div class="input-prefix">
+                  <span>Bs/cab/ciclo</span>
+                  <input id="f-sanidad" type="number" min="0" step="5" value="0" placeholder="0" />
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-arriendo">Arrendamiento</label>
+                <div class="input-prefix">
+                  <span>Bs/cab/mes</span>
+                  <input id="f-arriendo" type="number" min="0" step="5" value="0" placeholder="0" />
+                </div>
+              </div>
+              <div class="field-group sm:col-span-2">
+                <label for="f-otros">Otras despesas (flete, comisiones, etc.)</label>
+                <div class="input-prefix">
+                  <span>Bs/cab/ciclo</span>
+                  <input id="f-otros" type="number" min="0" step="10" value="0" placeholder="0" />
+                </div>
+              </div>
+            </div>
+
+            {/* Resumen costos */}
+            <div class="mt-4 rounded-xl border border-earth-200 overflow-hidden text-sm">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-earth-100 text-earth-600 text-xs uppercase tracking-wide">
+                    <th class="text-left px-4 py-2 font-semibold">Costo</th>
+                    <th class="text-right px-4 py-2 font-semibold">/ cab</th>
+                    <th class="text-right px-4 py-2 font-semibold">Lote</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-costos" class="divide-y divide-earth-100 text-potrero-900">
+                  {/* filled by JS */}
+                </tbody>
+                <tfoot>
+                  <tr class="bg-earth-100 font-bold text-potrero-900">
+                    <td class="px-4 py-2.5">Total costos operativos</td>
+                    <td class="text-right px-4 py-2.5">Bs <span id="tfoot-cab">0</span></td>
+                    <td class="text-right px-4 py-2.5">Bs <span id="tfoot-lote">0</span></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN 4: Venta */}
+        <div class="calc-section" id="sec-venta">
+          <button type="button" class="sec-header" aria-expanded="true" aria-controls="body-venta">
+            <div class="flex items-center gap-3">
+              <div class="sec-icon bg-green-50 text-green-700">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-potrero-900 text-sm leading-none">Venta</p>
+                <p id="tag-venta" class="text-earth-600 text-xs mt-0.5">Bs 0/kg PV · Rend. 56 %</p>
+              </div>
+            </div>
+            <svg class="sec-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+          <div id="body-venta" class="sec-body">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="field-group">
+                <label for="f-precio-venta">Precio de venta</label>
+                <div class="input-prefix">
+                  <span>Bs/kg PV</span>
+                  <input id="f-precio-venta" type="number" min="0" step="0.5" value="22" placeholder="22" />
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="f-rendimiento">Rendimiento al gancho</label>
+                <div class="input-suffix">
+                  <input id="f-rendimiento" type="number" min="1" max="100" step="0.5" value="56" placeholder="56" />
+                  <span>%</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-earth-500 mt-3">
+              El rendimiento al gancho típico en bovinos de trópico es <strong>55–58 %</strong>.
+              Se usa para calcular el precio implícito por kg de carne.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ── PANEL RESULTADOS (sticky) ────────────────── */}
+      <aside class="space-y-3 lg:sticky lg:top-20">
+
+        {/* TOTALIZADOR */}
+        <div class="bg-potrero-900 text-white rounded-2xl p-5 shadow-lg">
+          <p class="text-earth-400 text-xs font-bold uppercase tracking-widest mb-4">Totalizador del lote</p>
+          <div class="grid grid-cols-3 gap-3 text-center mb-4">
+            <div>
+              <p class="text-earth-500 text-[10px] uppercase tracking-wide mb-1">Cabezas</p>
+              <p class="text-white font-bold text-lg leading-none"><span id="r-cabezas">100</span></p>
+            </div>
+            <div class="border-x border-potrero-700">
+              <p class="text-earth-500 text-[10px] uppercase tracking-wide mb-1">Kg ganados</p>
+              <p class="text-green-400 font-bold text-lg leading-none">+<span id="r-kg-gan">126</span></p>
+            </div>
+            <div>
+              <p class="text-earth-500 text-[10px] uppercase tracking-wide mb-1">Días</p>
+              <p class="text-white font-bold text-lg leading-none"><span id="r-dias">180</span></p>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-sm border-t border-potrero-800 pt-4">
+            {/* Ingresos */}
+            <div class="flex justify-between">
+              <span class="text-earth-400">Ingreso venta <span class="text-earth-600 text-xs">/cab</span></span>
+              <span class="text-white font-semibold">Bs <span id="r-ing-cab">0</span></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-earth-400">Ingreso venta <span class="text-earth-600 text-xs">lote</span></span>
+              <span class="text-white font-semibold">Bs <span id="r-ing-lote">0</span></span>
+            </div>
+            {/* Costos */}
+            <div class="border-t border-potrero-800 pt-2 mt-2">
+              <div class="flex justify-between">
+                <span class="text-earth-400">Adquisición <span class="text-earth-600 text-xs">/cab</span></span>
+                <span class="text-red-400 font-semibold">–Bs <span id="r-adq-cab">0</span></span>
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="text-earth-400">Costos operativos <span class="text-earth-600 text-xs">/cab</span></span>
+                <span class="text-red-400 font-semibold">–Bs <span id="r-op-cab">0</span></span>
+              </div>
+            </div>
+            {/* Costo producción/kg */}
+            <div class="border-t border-potrero-800 pt-2 mt-2 flex justify-between">
+              <span class="text-earth-400">Costo producción</span>
+              <span class="text-amber-300 font-bold">Bs <span id="r-costo-kg">0</span>/kg</span>
+            </div>
+          </div>
+        </div>
+
+        {/* RESULTADO FINAL */}
+        <div id="panel-resultado" class="rounded-2xl p-5 border-2 transition-all duration-300 bg-earth-100 border-earth-200">
+          <p class="text-xs font-bold uppercase tracking-widest mb-3" id="res-label">Resultado</p>
+
+          {/* Agio */}
+          <div class="mb-4">
+            <p class="text-[10px] text-earth-500 uppercase tracking-wider mb-0.5">Agio (diferencial compra-venta)</p>
+            <p class="text-2xl font-bold leading-none" id="r-agio">Bs 0/kg</p>
+            <p class="text-xs text-earth-500 mt-1">Precio venta − precio compra por kg PV</p>
+          </div>
+
+          <div class="space-y-2 text-sm border-t border-earth-200 pt-3">
+            <div class="flex justify-between">
+              <span class="text-earth-600">Resultado <span class="text-earth-500 text-xs">/cab</span></span>
+              <span class="font-bold" id="r-res-cab">Bs 0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-earth-600">Resultado <span class="text-earth-500 text-xs">lote total</span></span>
+              <span class="font-bold text-lg" id="r-res-lote">Bs 0</span>
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div class="bg-white rounded-xl py-2.5 px-1 border border-earth-200">
+              <p class="text-[10px] text-earth-500 uppercase tracking-wide">Margen</p>
+              <p class="font-bold text-base mt-0.5" id="r-margen">0,0 %</p>
+            </div>
+            <div class="bg-white rounded-xl py-2.5 px-1 border border-earth-200">
+              <p class="text-[10px] text-earth-500 uppercase tracking-wide">Margen/Mes</p>
+              <p class="font-bold text-base mt-0.5" id="r-margen-mes">0,0 %</p>
+            </div>
+            <div class="bg-white rounded-xl py-2.5 px-1 border border-earth-200">
+              <p class="text-[10px] text-earth-500 uppercase tracking-wide">ROI</p>
+              <p class="font-bold text-base mt-0.5" id="r-roi">0,0 %</p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+          class="flex items-center gap-3 bg-[#25D366] hover:bg-[#1faf54] text-white rounded-2xl px-5 py-4 transition-colors shadow-md">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <div>
+            <p class="font-bold text-sm leading-none">¿Querés analizar tu lote?</p>
+            <p class="text-white/80 text-xs mt-0.5">Escribinos por WhatsApp</p>
+          </div>
+        </a>
+
+        <p class="text-center text-xs text-earth-500">
+          Potrero © {new Date().getFullYear()} · Hecho en Bolivia 🇧🇴
+        </p>
+      </aside>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* ── Secciones plegables ────────────────── */
+  .calc-section {
+    @apply bg-white border border-earth-200 rounded-2xl overflow-hidden shadow-warm-sm;
+  }
+  .sec-header {
+    @apply w-full flex items-center justify-between gap-3 px-5 py-4 text-left hover:bg-earth-50 transition-colors duration-150;
+  }
+  .sec-icon {
+    @apply w-9 h-9 rounded-xl flex items-center justify-center shrink-0;
+  }
+  .sec-chevron {
+    @apply text-earth-400 shrink-0 transition-transform duration-200;
+  }
+  .sec-header[aria-expanded="false"] .sec-chevron {
+    @apply rotate-180;
+  }
+  .sec-body {
+    @apply px-5 pb-5 border-t border-earth-100;
+  }
+  .sec-body.hidden {
+    @apply hidden;
+  }
+
+  /* ── Campos ─────────────────────────────── */
+  .field-group {
+    @apply flex flex-col gap-1.5;
+  }
+  .field-group label {
+    @apply text-xs font-semibold text-potrero-800;
+  }
+  .field-group select,
+  .field-group input[type="number"] {
+    @apply w-full bg-earth-50 border border-earth-200 text-potrero-900 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-earth-400 focus:bg-white transition;
+  }
+  .input-suffix {
+    @apply flex items-center border border-earth-200 rounded-lg overflow-hidden focus-within:border-earth-400 focus-within:bg-white transition bg-earth-50;
+  }
+  .input-suffix input {
+    @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-potrero-900 focus:outline-none border-none min-w-0;
+  }
+  .input-suffix span {
+    @apply bg-earth-100 border-l border-earth-200 px-3 py-2.5 text-xs text-earth-600 font-medium shrink-0;
+  }
+  .input-prefix {
+    @apply flex items-center border border-earth-200 rounded-lg overflow-hidden focus-within:border-earth-400 focus-within:bg-white transition bg-earth-50;
+  }
+  .input-prefix span {
+    @apply bg-earth-100 border-r border-earth-200 px-3 py-2.5 text-xs text-earth-600 font-medium shrink-0;
+  }
+  .input-prefix input {
+    @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-potrero-900 focus:outline-none border-none min-w-0;
+  }
+</style>
+
+<script>
+  // ── Helpers ──────────────────────────────────────────
+  const $ = (id: string) => document.getElementById(id)!
+  const num = (id: string) => parseFloat(($(`f-${id}`) as HTMLInputElement).value) || 0
+  const fmt = (n: number, dec = 0) => n.toLocaleString('es-BO', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+  const fmtPct = (n: number) => fmt(n, 1) + ' %'
+
+  // ── Accordion ───────────────────────────────────────
+  document.querySelectorAll('.sec-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true'
+      const bodyId = btn.getAttribute('aria-controls')!
+      const body = document.getElementById(bodyId)!
+      btn.setAttribute('aria-expanded', String(!expanded))
+      body.classList.toggle('hidden', expanded)
+    })
+  })
+
+  // ── Main calculation ─────────────────────────────────
+  function calc() {
+    const cabezas     = Math.max(1, num('cabezas'))
+    const pesoIni     = num('peso-ini')
+    const precioCompra= num('precio-compra')
+    const dias        = Math.max(1, num('dias'))
+    const gmd         = num('gmd')
+    const alim        = num('alim')   // Bs/cab/mes
+    const mo          = num('mo')     // Bs/cab/mes
+    const sanidad     = num('sanidad')// Bs/cab/ciclo
+    const arriendo    = num('arriendo')// Bs/cab/mes
+    const otros       = num('otros')  // Bs/cab/ciclo
+    const precioVenta = num('precio-venta')
+    const rend        = num('rendimiento') / 100
+
+    const meses = dias / 30.44
+
+    // Pesos
+    const ganancia = gmd * dias
+    const pesoFin  = pesoIni + ganancia
+
+    // Inversión adquisición
+    const adqCab  = pesoIni * precioCompra
+    const adqLote = adqCab * cabezas
+
+    // Costos operativos /cab
+    const costoAlim    = alim     * meses
+    const costoMo      = mo       * meses
+    const costoSanidad = sanidad
+    const costoArriendo= arriendo * meses
+    const costoOtros   = otros
+    const totalOpCab   = costoAlim + costoMo + costoSanidad + costoArriendo + costoOtros
+    const totalOpLote  = totalOpCab * cabezas
+
+    // Costo total /cab y /kg ganado
+    const costoTotalCab  = adqCab + totalOpCab
+    const costoTotalLote = costoTotalCab * cabezas
+    const costoKg = ganancia > 0 ? totalOpCab / ganancia : 0
+
+    // Ingresos
+    const ingCab  = pesoFin * precioVenta
+    const ingLote = ingCab * cabezas
+
+    // Resultado
+    const resCab  = ingCab  - costoTotalCab
+    const resLote = resCab  * cabezas
+
+    // Agio (diferencial de precios sobre kg PV)
+    const agio = precioVenta - precioCompra
+
+    // Ratios
+    const margen    = costoTotalCab > 0 ? (resCab / costoTotalCab) * 100 : 0
+    const margenMes = meses > 0 ? margen / meses : 0
+    const roi       = adqLote + totalOpLote > 0 ? (resLote / (adqLote + totalOpLote)) * 100 : 0
+
+    // ── Actualizar DOM ─────────────────────────────────
+
+    // Tags de sección
+    $('tag-lote').textContent     = `${fmt(cabezas)} cab. · Bs ${fmt(precioCompra,2)}/kg PV`
+    $('tag-ciclo').textContent    = `${fmt(dias)} días · GMD ${fmt(gmd,3)} kg/día`
+    $('tag-costos-total').textContent = fmt(totalOpCab, 0)
+    $('tag-venta').textContent    = `Bs ${fmt(precioVenta,2)}/kg PV · Rend. ${fmt(num('rendimiento'),0)} %`
+
+    // Bloque inversión compra
+    $('calc-inv-cab').textContent  = fmt(adqCab)
+    $('calc-inv-lote').textContent = fmt(adqLote)
+
+    // Totalizador ciclo
+    $('calc-p-ini').textContent   = fmt(pesoIni, 1)
+    $('calc-ganancia').textContent= fmt(ganancia, 1)
+    $('calc-p-fin').textContent   = fmt(pesoFin, 1)
+
+    // Panel resultados sidebar
+    $('r-cabezas').textContent    = fmt(cabezas)
+    $('r-kg-gan').textContent     = fmt(ganancia, 1)
+    $('r-dias').textContent       = fmt(dias)
+    $('r-ing-cab').textContent    = fmt(ingCab)
+    $('r-ing-lote').textContent   = fmt(ingLote)
+    $('r-adq-cab').textContent    = fmt(adqCab)
+    $('r-op-cab').textContent     = fmt(totalOpCab)
+    $('r-costo-kg').textContent   = fmt(costoKg, 2)
+    $('r-res-cab').textContent    = `Bs ${fmt(resCab)}`
+    $('r-res-lote').textContent   = `Bs ${fmt(resLote)}`
+    $('r-margen').textContent     = fmtPct(margen)
+    $('r-margen-mes').textContent = fmtPct(margenMes)
+    $('r-roi').textContent        = fmtPct(roi)
+
+    // Agio
+    $('r-agio').textContent = `Bs ${fmt(agio, 2)}/kg`
+
+    // Color agio + resultado
+    const panelRes   = $('panel-resultado')
+    const resLabel   = $('res-label')
+    const resLoteEl  = $('r-res-lote')
+    const resCabEl   = $('r-res-cab')
+    const agioEl     = $('r-agio')
+    const margenEl   = $('r-margen')
+    const margenMesEl= $('r-margen-mes')
+    const roiEl      = $('r-roi')
+
+    const positivo = resCab > 0
+
+    panelRes.className = positivo
+      ? 'rounded-2xl p-5 border-2 transition-all duration-300 bg-green-50 border-green-300'
+      : 'rounded-2xl p-5 border-2 transition-all duration-300 bg-red-50 border-red-200'
+
+    resLabel.className    = positivo ? 'text-xs font-bold uppercase tracking-widest mb-3 text-green-700' : 'text-xs font-bold uppercase tracking-widest mb-3 text-red-600'
+    resLabel.textContent  = positivo ? '✓ Operación rentable' : '✗ Operación no rentable'
+    agioEl.className      = agio >= 0 ? 'text-2xl font-bold leading-none text-green-700' : 'text-2xl font-bold leading-none text-red-600'
+    resCabEl.className    = `font-bold ${positivo ? 'text-green-700' : 'text-red-600'}`
+    resLoteEl.className   = `font-bold text-lg ${positivo ? 'text-green-700' : 'text-red-600'}`
+    margenEl.className    = `font-bold text-base mt-0.5 ${margen >= 0 ? 'text-green-700' : 'text-red-600'}`
+    margenMesEl.className = `font-bold text-base mt-0.5 ${margenMes >= 0 ? 'text-green-700' : 'text-red-600'}`
+    roiEl.className       = `font-bold text-base mt-0.5 ${roi >= 0 ? 'text-green-700' : 'text-red-600'}`
+
+    // ── Tabla costos ──────────────────────────────────
+    const rows = [
+      ['Alimentación / suplementación', costoAlim,     costoAlim * cabezas],
+      ['Mano de obra',                   costoMo,       costoMo * cabezas],
+      ['Sanidad / veterinario',          costoSanidad,  costoSanidad * cabezas],
+      ['Arrendamiento',                  costoArriendo, costoArriendo * cabezas],
+      ['Otras despesas',                 costoOtros,    costoOtros * cabezas],
+    ]
+
+    const tbody = $('tabla-costos')
+    tbody.innerHTML = rows.map(([label, cab, lote]) => `
+      <tr class="text-sm ${(cab as number) === 0 ? 'text-earth-400' : 'text-potrero-900'}">
+        <td class="px-4 py-2">${label}</td>
+        <td class="text-right px-4 py-2">Bs ${fmt(cab as number)}</td>
+        <td class="text-right px-4 py-2">Bs ${fmt(lote as number)}</td>
+      </tr>
+    `).join('')
+
+    $('tfoot-cab').textContent  = fmt(totalOpCab)
+    $('tfoot-lote').textContent = fmt(totalOpLote)
+  }
+
+  // ── Listeners ────────────────────────────────────────
+  document.querySelectorAll('#calc-form input, #calc-form select').forEach(el => {
+    el.addEventListener('input', calc)
+  })
+
+  calc()
+</script>
