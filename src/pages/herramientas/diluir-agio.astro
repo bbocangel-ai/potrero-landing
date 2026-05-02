@@ -1,0 +1,368 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const BASE       = import.meta.env.BASE_URL
+const logoSrc    = `${BASE}brand/isotipo-color.png`.replace(/\/+/g, '/')
+const hubUrl     = `${BASE}herramientas/`.replace(/\/+/g, '/')
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
+---
+
+<Layout
+  title="Diluir Ágio — Herramientas Potrero"
+  description="Calculá cuántos días necesitás para diluir el sobreprecio pagado en la compra de animales. En Bs/kg. Gratis."
+>
+  <div class="min-h-screen bg-[#F5F5F5] font-sans">
+
+    {/* ── HEADER ── */}
+    <header class="bg-[#1E4230] text-white px-5 py-4 flex items-center justify-between gap-4 shadow-md sticky top-0 z-40">
+      <a href={hubUrl} class="flex items-center gap-2 text-earth-300 hover:text-white transition-colors text-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        Herramientas
+      </a>
+      <a href={hubUrl} class="flex items-center gap-2">
+        <img src={logoSrc} alt="Potrero" class="w-7 h-7 object-contain" />
+        <span class="font-display font-medium text-[1rem] tracking-tight">Potrero</span>
+      </a>
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+        class="text-xs font-semibold bg-[#25D366] hover:bg-[#1faf54] text-white px-3 py-1.5 rounded-lg transition-colors hidden sm:block">
+        WhatsApp
+      </a>
+    </header>
+
+    {/* ── TITLE BAR ── */}
+    <div class="bg-white border-b border-gray-200 px-5 py-4">
+      <div class="max-w-4xl mx-auto flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <h1 class="font-bold text-gray-900 text-lg leading-tight">Diluir Ágio</h1>
+          <p class="text-gray-500 text-xs mt-0.5">Simulá el impacto del ágio/deságio en la compra de animales · Bs/kg PV</p>
+        </div>
+      </div>
+    </div>
+
+    {/* ── MAIN ── */}
+    <main class="max-w-4xl mx-auto px-4 py-6 space-y-5">
+
+      {/* INPUTS */}
+      <div class="bg-white rounded-2xl border border-gray-200 p-5 md:p-6">
+        <h2 class="font-bold text-gray-800 text-sm mb-4 flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center">1</span>
+          Datos del lote
+        </h2>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+
+          <div class="field-wrap">
+            <label for="f-precio-mercado">Precio de mercado referencial</label>
+            <p class="field-hint">Precio de referencia del mercado actual</p>
+            <div class="input-pre">
+              <span>Bs/kg PV</span>
+              <input id="f-precio-mercado" type="number" min="0" step="0.5" value="16" />
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label for="f-precio-pagado">Precio pagado por el animal</label>
+            <p class="field-hint">Precio total pagado en la compra</p>
+            <div class="input-pre">
+              <span>Bs/kg PV</span>
+              <input id="f-precio-pagado" type="number" min="0" step="0.5" value="18" />
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label for="f-peso">Peso del animal en la compra</label>
+            <p class="field-hint">Peso vivo al momento de la compra</p>
+            <div class="input-suf">
+              <input id="f-peso" type="number" min="1" value="280" />
+              <span>kg PV</span>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label for="f-dias">Período de recría / ciclo</label>
+            <p class="field-hint"><span id="lbl-meses">9.9</span> meses</p>
+            <div class="input-suf">
+              <input id="f-dias" type="number" min="1" value="300" />
+              <span>días</span>
+            </div>
+          </div>
+
+          <div class="field-wrap sm:col-span-2">
+            <label for="f-gmd">GMD — Ganancia Media Diaria esperada</label>
+            <p class="field-hint">Kilos que gana el animal por día en promedio</p>
+            <div class="input-suf" style="max-width: 200px">
+              <input id="f-gmd" type="number" min="0" step="0.01" value="0.600" />
+              <span>kg/día</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-5 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-xs text-blue-700 leading-relaxed">
+          <strong>Tip:</strong> El ágio es el sobreprecio que pagás por encima del precio de mercado. Si compraste <em>barato</em>, el resultado será un deságio (negativo) — ¡ganaste desde el día cero!
+        </div>
+      </div>
+
+      {/* STATUS BADGE */}
+      <div id="panel-status" class="rounded-2xl border-2 px-5 py-4 flex items-center gap-4 transition-all duration-300 bg-gray-50 border-gray-200">
+        <div id="status-icon" class="w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">—</div>
+        <div>
+          <p id="status-title" class="font-bold text-gray-700 text-base leading-tight">Ingresá los datos</p>
+          <p id="status-sub" class="text-gray-500 text-xs mt-0.5">El resultado aparece aquí</p>
+        </div>
+      </div>
+
+      {/* RESULTS GRID */}
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3" id="cards-grid">
+
+        <div class="result-card">
+          <p class="rc-label">Ágio por kg</p>
+          <p class="rc-value" id="r-agio-kg">Bs 0,00</p>
+          <p class="rc-sub" id="r-agio-kg-sub">precio pagado − precio mercado</p>
+        </div>
+
+        <div class="result-card rc-highlight">
+          <p class="rc-label">Ágio total por cabeza</p>
+          <p class="rc-value" id="r-agio-total">Bs 0,00</p>
+          <p class="rc-sub" id="r-agio-total-sub">ágio/kg × peso compra</p>
+        </div>
+
+        <div class="result-card">
+          <p class="rc-label">Costo real de adquisición</p>
+          <p class="rc-value" id="r-costo-adq">Bs 0,00</p>
+          <p class="rc-sub">precio pagado × peso compra</p>
+        </div>
+
+        <div class="result-card">
+          <p class="rc-label">Ágio diario a diluir</p>
+          <p class="rc-value" id="r-agio-diario">Bs 0,00/día</p>
+          <p class="rc-sub">ágio total ÷ días del ciclo</p>
+        </div>
+
+        <div class="result-card rc-highlight">
+          <p class="rc-label">GMD necesario para diluir</p>
+          <p class="rc-value" id="r-gmd-nec">0,000 kg/día</p>
+          <p class="rc-sub">para diluir en el ciclo planificado</p>
+        </div>
+
+        <div class="result-card">
+          <p class="rc-label">Días para diluir (con tu GMD)</p>
+          <p class="rc-value" id="r-dias-diluir">— días</p>
+          <p class="rc-sub" id="r-dias-diluir-sub">ágio total ÷ (GMD × precio mercado)</p>
+        </div>
+
+      </div>
+
+      {/* COMPARACIÓN GMD */}
+      <div class="bg-white rounded-2xl border border-gray-200 p-5" id="panel-comparacion">
+        <h2 class="font-bold text-gray-800 text-sm mb-4">Comparación de GMD</h2>
+        <div class="grid sm:grid-cols-3 gap-4 text-center">
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <p class="text-xs text-gray-500 mb-1">Tu GMD</p>
+            <p class="text-2xl font-bold text-gray-900" id="cmp-gmd-actual">0,000</p>
+            <p class="text-xs text-gray-400 mt-0.5">kg/día</p>
+          </div>
+          <div class="flex items-center justify-center">
+            <div id="cmp-arrow" class="text-4xl font-bold text-gray-300">→</div>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <p class="text-xs text-gray-500 mb-1">GMD necesario</p>
+            <p class="text-2xl font-bold" id="cmp-gmd-nec">0,000</p>
+            <p class="text-xs text-gray-400 mt-0.5">kg/día</p>
+          </div>
+        </div>
+        <div id="cmp-conclusion" class="mt-4 rounded-xl px-4 py-3 text-sm font-medium text-center bg-gray-100 text-gray-500">
+          —
+        </div>
+      </div>
+
+      {/* ACTIONS */}
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="window.print()"
+          class="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir / Exportar PDF
+        </button>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+          class="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1faf54] text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Consultar con Potrero
+        </a>
+      </div>
+
+      <p class="text-center text-xs text-gray-400 pb-2">
+        Potrero © {new Date().getFullYear()} · Herramienta gratuita · Hecho en Bolivia 🇧🇴
+      </p>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  /* ── Fields ── */
+  .field-wrap { @apply flex flex-col gap-1; }
+  .field-wrap label { @apply text-xs font-semibold text-gray-700; }
+  .field-hint { @apply text-[11px] text-blue-600 -mt-0.5; }
+
+  .input-pre {
+    @apply flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50 focus-within:border-blue-400 focus-within:bg-white transition;
+  }
+  .input-pre span {
+    @apply bg-gray-100 border-r border-gray-200 px-3 py-2.5 text-xs text-gray-500 font-medium shrink-0;
+  }
+  .input-pre input {
+    @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-gray-900 focus:outline-none border-none min-w-0;
+  }
+
+  .input-suf {
+    @apply flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50 focus-within:border-blue-400 focus-within:bg-white transition;
+  }
+  .input-suf input {
+    @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-gray-900 focus:outline-none border-none min-w-0;
+  }
+  .input-suf span {
+    @apply bg-gray-100 border-l border-gray-200 px-3 py-2.5 text-xs text-gray-500 font-medium shrink-0;
+  }
+
+  /* ── Result cards ── */
+  .result-card {
+    @apply bg-white rounded-2xl border border-gray-200 p-4;
+  }
+  .rc-highlight {
+    @apply border-yellow-200 bg-yellow-50;
+  }
+  .rc-label {
+    @apply text-[10px] text-gray-500 uppercase tracking-wider font-semibold mb-1;
+  }
+  .rc-value {
+    @apply text-xl font-bold text-gray-900 leading-tight;
+  }
+  .rc-sub {
+    @apply text-[10px] text-gray-400 mt-1 leading-tight;
+  }
+
+  /* ── Print ── */
+  @media print {
+    header, .field-wrap button, a[href*="whatsapp"] { display: none !important; }
+    .bg-\[#F5F5F5\] { background: white !important; }
+  }
+</style>
+
+<script>
+  // ── Helpers ─────────────────────────────────────────
+  const $ = (id: string) => document.getElementById(id)!
+  const inp = (id: string) => parseFloat(($(`f-${id}`) as HTMLInputElement).value) || 0
+  const fmt  = (n: number, d = 2) => n.toLocaleString('es-BO', { minimumFractionDigits: d, maximumFractionDigits: d })
+
+  // ── Calculate ────────────────────────────────────────
+  function calc() {
+    const precioMercado = inp('precio-mercado')
+    const precioPagado  = inp('precio-pagado')
+    const peso          = inp('peso')
+    const dias          = Math.max(1, inp('dias'))
+    const gmd           = inp('gmd')
+
+    // Meses label
+    $('lbl-meses').textContent = fmt(dias / 30.44, 1)
+
+    // Core values
+    const agioKg     = precioPagado - precioMercado        // Bs/kg (positive = paid above market)
+    const agioTotal  = agioKg * peso                       // Bs/cab
+    const costoAdq   = precioPagado * peso                 // Bs/cab
+    const aginDiario = agioTotal / dias                    // Bs/cab/día
+
+    // GMD needed to dilute total agio within the cycle
+    // Each kg gained "earns" precioMercado Bs when sold
+    // gmdNec × dias × precioMercado = agioTotal
+    const gmdNec = precioMercado > 0 ? Math.abs(agioTotal) / (dias * precioMercado) : 0
+
+    // Days to dilute with the given GMD
+    const diasDiluir = (gmd > 0 && precioMercado > 0 && agioTotal > 0)
+      ? agioTotal / (gmd * precioMercado)
+      : (agioTotal <= 0 ? 0 : Infinity)
+
+    // ── Update DOM ───────────────────────────────────────
+
+    // Cards
+    $('r-agio-kg').textContent       = `Bs ${fmt(Math.abs(agioKg))}/kg`
+    $('r-agio-kg-sub').textContent   = agioKg > 0 ? `Pagaste Bs ${fmt(agioKg)} más por kg` : agioKg < 0 ? `Ahorraste Bs ${fmt(Math.abs(agioKg))} por kg` : 'Precio exacto de mercado'
+    $('r-agio-total').textContent    = `Bs ${fmt(Math.abs(agioTotal))}`
+    $('r-agio-total-sub').textContent= agioKg > 0 ? `Extra pagado por el lote` : agioKg < 0 ? `Ahorro vs. precio de mercado` : `Sin ágio`
+    $('r-costo-adq').textContent     = `Bs ${fmt(costoAdq)}`
+    $('r-agio-diario').textContent   = `Bs ${fmt(Math.abs(aginDiario))}/día`
+    $('r-gmd-nec').textContent       = `${fmt(gmdNec, 3)} kg/día`
+
+    if (agioTotal <= 0) {
+      $('r-dias-diluir').textContent     = '— (deságio)'
+      $('r-dias-diluir-sub').textContent = 'Compraste por debajo del mercado'
+    } else if (!isFinite(diasDiluir)) {
+      $('r-dias-diluir').textContent     = '∞ días'
+      $('r-dias-diluir-sub').textContent = 'GMD = 0, no diluis nunca'
+    } else {
+      $('r-dias-diluir').textContent     = `${fmt(diasDiluir, 0)} días`
+      $('r-dias-diluir-sub').textContent = diasDiluir <= dias
+        ? `✓ Dentro de los ${fmt(dias, 0)} días del ciclo`
+        : `⚠ Supera los ${fmt(dias, 0)} días del ciclo`
+    }
+
+    // Comparación GMD
+    $('cmp-gmd-actual').textContent = fmt(gmd, 3)
+    $('cmp-gmd-nec').textContent    = fmt(gmdNec, 3)
+
+    const cmpGmdNecEl    = $('cmp-gmd-nec')
+    const cmpConclusion  = $('cmp-conclusion')
+
+    if (agioTotal <= 0) {
+      cmpGmdNecEl.className = 'text-2xl font-bold text-green-600'
+      $('cmp-arrow').textContent = '🎉'
+      cmpConclusion.className = 'mt-4 rounded-xl px-4 py-3 text-sm font-medium text-center bg-green-100 text-green-700'
+      cmpConclusion.textContent = '¡Deságio! Compraste por debajo del mercado — ya ganaste desde el día uno.'
+    } else if (gmd >= gmdNec) {
+      cmpGmdNecEl.className = 'text-2xl font-bold text-green-600'
+      $('cmp-arrow').textContent = '✓'
+      cmpConclusion.className = 'mt-4 rounded-xl px-4 py-3 text-sm font-medium text-center bg-green-100 text-green-700'
+      cmpConclusion.textContent = `Tu GMD (${fmt(gmd,3)} kg/día) supera el mínimo necesario (${fmt(gmdNec,3)} kg/día). Vas a diluir el ágio en ${fmt(diasDiluir,0)} días.`
+    } else {
+      cmpGmdNecEl.className = 'text-2xl font-bold text-red-600'
+      $('cmp-arrow').textContent = '⚠'
+      cmpConclusion.className = 'mt-4 rounded-xl px-4 py-3 text-sm font-medium text-center bg-red-50 text-red-700'
+      cmpConclusion.textContent = `Tu GMD (${fmt(gmd,3)} kg/día) está por debajo del mínimo necesario (${fmt(gmdNec,3)} kg/día). No diluís el ágio en el ciclo planificado.`
+    }
+
+    // Status badge
+    const panelStatus = $('panel-status')
+    const statusIcon  = $('status-icon')
+    const statusTitle = $('status-title')
+    const statusSub   = $('status-sub')
+
+    if (agioKg > 0.01) {
+      panelStatus.className = 'rounded-2xl border-2 px-5 py-4 flex items-center gap-4 transition-all duration-300 bg-orange-50 border-orange-300'
+      statusIcon.textContent = '⬆'
+      statusIcon.className   = 'w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0 bg-orange-100'
+      statusTitle.className  = 'font-bold text-orange-700 text-base leading-tight'
+      statusTitle.textContent= `ÁGIO — Pagaste Bs ${fmt(agioKg)} más por kg`
+      statusSub.textContent  = `Ágio total: Bs ${fmt(agioTotal)} por cabeza · Necesitás ${fmt(gmdNec,3)} kg/día para diluirlo en el ciclo`
+    } else if (agioKg < -0.01) {
+      panelStatus.className = 'rounded-2xl border-2 px-5 py-4 flex items-center gap-4 transition-all duration-300 bg-green-50 border-green-300'
+      statusIcon.textContent = '⬇'
+      statusIcon.className   = 'w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0 bg-green-100'
+      statusTitle.className  = 'font-bold text-green-700 text-base leading-tight'
+      statusTitle.textContent= `DESÁGIO — Compraste Bs ${fmt(Math.abs(agioKg))} más barato por kg`
+      statusSub.textContent  = `Ahorro total: Bs ${fmt(Math.abs(agioTotal))} por cabeza — ganaste desde el día uno`
+    } else {
+      panelStatus.className = 'rounded-2xl border-2 px-5 py-4 flex items-center gap-4 transition-all duration-300 bg-gray-50 border-gray-300'
+      statusIcon.textContent = '—'
+      statusIcon.className   = 'w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0 bg-gray-100'
+      statusTitle.className  = 'font-bold text-gray-700 text-base leading-tight'
+      statusTitle.textContent= 'NEUTRO — Pagaste el precio de mercado'
+      statusSub.textContent  = 'Sin ágio ni deságio en esta compra'
+    }
+  }
+
+  // ── Listeners ────────────────────────────────────────
+  document.querySelectorAll('input[type="number"]').forEach(el => el.addEventListener('input', calc))
+
+  calc()
+</script>

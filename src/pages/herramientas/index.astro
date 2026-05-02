@@ -1,0 +1,206 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const BASE     = import.meta.env.BASE_URL
+const logoSrc  = `${BASE}brand/isotipo-color.png`.replace(/\/+/g, '/')
+const landingUrl = BASE.replace(/\/+$/, '/')
+
+const herramientas = [
+  {
+    title: 'Simulador de Resultados',
+    desc:  'Simulá la rentabilidad completa de tu lote: compra, costos operativos, venta y ROI.',
+    badge: 'Popular',
+    badgeClass: 'badge-popular',
+    iconBg: '#DCFCE7',
+    href: `${BASE}calculadora/`.replace(/\/+/g, '/'),
+    available: true,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+  },
+  {
+    title: 'Diluir Ágio',
+    desc:  'Calculá cuántos días necesitás para diluir el sobreprecio pagado en la compra de animales.',
+    badge: 'Nuevo',
+    badgeClass: 'badge-nuevo',
+    iconBg: '#DBEAFE',
+    href: `${BASE}herramientas/diluir-agio/`.replace(/\/+/g, '/'),
+    available: true,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  },
+  {
+    title: 'Tasa de Carga Animal',
+    desc:  'Calculá la carga animal en UA/ha y optimizá el uso de tus potreros.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#FEF9C3',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CA8A04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  },
+  {
+    title: 'Cálculo de la Diaria',
+    desc:  'Calculá el costo operativo diario por cabeza y el margen por kg producido.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#DCFCE7',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  },
+  {
+    title: 'Cálculo de Suplementación',
+    desc:  'Determiná la cantidad exacta de suplemento necesario para tu rebaño por día.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#FEE2E2',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>`,
+  },
+  {
+    title: 'Punto de Equilibrio',
+    desc:  'Calculá el precio mínimo de venta en Bs/kg para no tener pérdidas en tu operación.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#EDE9FE',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><path d="M8 5l-3 7 3 7"/><path d="M16 5l3 7-3 7"/></svg>`,
+  },
+  {
+    title: 'Costo de Producción PRO',
+    desc:  'Descubrí cuánto te cuesta producir cada kg con base en costos mensuales y GMD.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#FFEDD5',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
+  },
+  {
+    title: 'Simulación de Compra',
+    desc:  'Compará distintas opciones de compra de ganado y encontrá la mejor inversión.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#DBEAFE',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+  },
+  {
+    title: 'Apuración Anual',
+    desc:  'Consolidá receitas, costos y gastos anuales con análisis completo de rentabilidad.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#F3E8FF',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9333EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+  },
+  {
+    title: 'Cierre de Lote',
+    desc:  'Calculá el rendimiento de carcasa y el resultado final estimado de la venta.',
+    badge: 'Próximamente',
+    badgeClass: 'badge-prox',
+    iconBg: '#FEE2E2',
+    href: null,
+    available: false,
+    svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  },
+]
+---
+
+<Layout
+  title="Herramientas Potrero — Calculadoras ganaderas gratuitas"
+  description="Suite de calculadoras ganaderas gratuitas para productores de Bolivia. Agio, carga animal, costo de producción, punto de equilibrio y más. En Bs."
+>
+  <div class="min-h-screen bg-[#F5F5F5] font-sans">
+
+    {/* ── HEADER ── */}
+    <header class="bg-[#1E4230] text-white px-5 py-4 flex items-center justify-between gap-4 shadow-md">
+      <a href={landingUrl} class="flex items-center gap-2.5">
+        <img src={logoSrc} alt="Potrero" class="w-8 h-8 object-contain" />
+        <div>
+          <p class="font-display font-medium text-[1.1rem] leading-none tracking-tight">Potrero</p>
+          <p class="text-earth-400 text-[10px] leading-none mt-0.5">Gestión ganadera</p>
+        </div>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:flex items-center gap-1.5 text-xs text-earth-300 border border-earth-600/60 px-3 py-1.5 rounded-full font-medium">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Herramientas gratuitas
+        </span>
+        <a href={`${import.meta.env.PUBLIC_WHATSAPP_URL}`} target="_blank" rel="noopener noreferrer"
+          class="text-xs font-semibold bg-[#25D366] hover:bg-[#1faf54] text-white px-3 py-1.5 rounded-lg transition-colors">
+          WhatsApp
+        </a>
+      </div>
+    </header>
+
+    {/* ── HERO ── */}
+    <div class="bg-[#1E4230] text-white px-5 pt-5 pb-7 border-b border-[#163527]">
+      <div class="max-w-4xl mx-auto">
+        <p class="text-[#C8A971] text-xs font-bold uppercase tracking-widest mb-2">Potrero · Suite de herramientas</p>
+        <h1 class="font-display font-medium text-[1.6rem] md:text-[2rem] tracking-tight leading-tight">
+          Calculadoras ganaderas
+        </h1>
+        <p class="text-earth-300/70 text-sm mt-1.5">
+          10 herramientas gratuitas para productores · Todo en <strong class="text-earth-300">Bs</strong>
+        </p>
+      </div>
+    </div>
+
+    {/* ── GRID ── */}
+    <main class="max-w-5xl mx-auto px-4 py-6 md:py-8">
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {herramientas.map((h, i) => (
+          <div class={`relative bg-white rounded-2xl border ${h.available ? 'border-gray-200 hover:border-gray-300 hover:shadow-md cursor-pointer transition-all duration-200 group' : 'border-gray-200 opacity-60'} overflow-hidden`}>
+
+            {/* Star */}
+            <button class="absolute top-3.5 right-3.5 text-gray-300 hover:text-yellow-400 transition-colors" aria-label="Marcar favorito">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+
+            {h.available ? (
+              <a href={h.href} class="block p-5">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-105"
+                  style={`background-color: ${h.iconBg}`}>
+                  <Fragment set:html={h.svg} />
+                </div>
+                <h2 class="font-bold text-gray-900 text-[0.95rem] leading-snug mb-1.5 group-hover:text-[#1E4230] transition-colors">
+                  {h.title}
+                </h2>
+                <p class="text-gray-500 text-xs leading-relaxed mb-3">{h.desc}</p>
+                <span class={`inline-block text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide ${h.badgeClass}`}>
+                  {h.badge}
+                </span>
+              </a>
+            ) : (
+              <div class="p-5">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={`background-color: ${h.iconBg}`}>
+                  <Fragment set:html={h.svg} />
+                </div>
+                <h2 class="font-bold text-gray-900 text-[0.95rem] leading-snug mb-1.5">{h.title}</h2>
+                <p class="text-gray-500 text-xs leading-relaxed mb-3">{h.desc}</p>
+                <span class={`inline-block text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide ${h.badgeClass}`}>
+                  {h.badge}
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p class="text-center text-xs text-gray-400 mt-8">
+        Potrero © {new Date().getFullYear()} · Herramientas gratuitas para productores de Bolivia 🇧🇴
+      </p>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .badge-popular  { background: #DCFCE7; color: #15803D; }
+  .badge-nuevo    { background: #FEF9C3; color: #854D0E; }
+  .badge-prox     { background: #F3F4F6; color: #6B7280; }
+</style>
