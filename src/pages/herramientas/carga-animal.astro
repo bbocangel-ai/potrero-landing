@@ -1,0 +1,352 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const BASE        = import.meta.env.BASE_URL
+const logoSrc     = `${BASE}brand/isotipo-color.png`.replace(/\/+/g, '/')
+const hubUrl      = `${BASE}herramientas/`.replace(/\/+/g, '/')
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
+---
+
+<Layout
+  title="Tasa de Carga Animal — Herramientas Potrero"
+  description="Calculá la carga animal de tu estancia en UA/ha. Ingresá todas las categorías de tu rodeo y descubrí si estás sub-cargado, óptimo o sobre-cargado."
+>
+<div class="min-h-screen bg-[#F5F5F5] font-sans">
+
+  {/* ── HEADER ── */}
+  <header class="bg-[#1E4230] text-white px-5 py-4 flex items-center justify-between gap-4 shadow-md sticky top-0 z-40">
+    <a href={hubUrl} class="flex items-center gap-2 text-earth-300 hover:text-white transition-colors text-sm">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Herramientas
+    </a>
+    <a href={hubUrl} class="flex items-center gap-2">
+      <img src={logoSrc} alt="Potrero" class="w-7 h-7 object-contain" />
+      <span class="font-display font-medium text-[1rem] tracking-tight">Potrero</span>
+    </a>
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+      class="text-xs font-semibold bg-[#25D366] hover:bg-[#1faf54] text-white px-3 py-1.5 rounded-lg transition-colors hidden sm:block">
+      WhatsApp
+    </a>
+  </header>
+
+  {/* ── TITLE BAR ── */}
+  <div class="bg-white border-b border-gray-200 px-5 py-4">
+    <div class="max-w-4xl mx-auto flex items-center gap-4">
+      <div class="w-11 h-11 rounded-xl bg-yellow-100 flex items-center justify-center shrink-0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CA8A04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-gray-900 text-lg leading-tight">Tasa de Carga Animal</h1>
+        <p class="text-gray-500 text-xs mt-0.5">Calculá UA/ha y optimizá el uso de tus potreros · Trópico boliviano</p>
+      </div>
+    </div>
+  </div>
+
+  {/* ── MAIN ── */}
+  <main class="max-w-4xl mx-auto px-4 py-6">
+    <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
+
+      {/* ── FORMULARIO ── */}
+      <div class="space-y-4">
+
+        {/* Superficie */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5">
+          <h2 class="font-bold text-gray-800 text-sm mb-4 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-yellow-500 text-white text-[10px] font-bold flex items-center justify-center">1</span>
+            Superficie ganadera
+          </h2>
+          <div class="flex items-center gap-3 max-w-xs">
+            <div class="flex-1 flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50 focus-within:border-yellow-400 focus-within:bg-white transition">
+              <input id="f-hectareas" type="number" min="1" value="1500"
+                class="flex-1 bg-transparent px-3 py-2.5 text-sm text-gray-900 focus:outline-none border-none" />
+              <span class="bg-gray-100 border-l border-gray-200 px-3 py-2.5 text-xs text-gray-500 font-medium">ha ganaderas</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Rodeo */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-yellow-500 text-white text-[10px] font-bold flex items-center justify-center">2</span>
+              Composición del rodeo
+            </h2>
+            <button id="btn-add" type="button"
+              class="flex items-center gap-1.5 text-xs font-semibold text-[#1E4230] border border-[#1E4230]/30 hover:bg-[#1E4230] hover:text-white px-3 py-1.5 rounded-lg transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar categoría
+            </button>
+          </div>
+
+          {/* Table header */}
+          <div class="grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 px-1 mb-2">
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide">Categoría</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Cabezas</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Equiv. UA</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Total UA</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide"></p>
+          </div>
+
+          {/* Rows container */}
+          <div id="rows-container" class="space-y-2"></div>
+
+          {/* Totals */}
+          <div class="mt-3 pt-3 border-t border-gray-100 grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 px-1">
+            <p class="text-sm font-bold text-gray-700">Total</p>
+            <p class="text-sm font-bold text-gray-900 text-right" id="tot-cabezas">0</p>
+            <p class="text-sm text-gray-400 text-right">—</p>
+            <p class="text-sm font-bold text-[#1E4230] text-right" id="tot-ua">0,00</p>
+            <p></p>
+          </div>
+        </div>
+
+        {/* Referencia UA */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5">
+          <h2 class="font-bold text-gray-800 text-sm mb-3">Equivalencias UA — Trópico boliviano</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1.5 text-xs text-gray-600">
+            <div class="flex justify-between"><span>Toro</span><span class="font-semibold text-gray-800">1,25 UA</span></div>
+            <div class="flex justify-between"><span>Vaca</span><span class="font-semibold text-gray-800">1,00 UA</span></div>
+            <div class="flex justify-between"><span>Vaca c/ cría</span><span class="font-semibold text-gray-800">1,20 UA</span></div>
+            <div class="flex justify-between"><span>Novillo &gt;2 años</span><span class="font-semibold text-gray-800">0,90 UA</span></div>
+            <div class="flex justify-between"><span>Novillo 1-2 años</span><span class="font-semibold text-gray-800">0,70 UA</span></div>
+            <div class="flex justify-between"><span>Ternero &lt;1 año</span><span class="font-semibold text-gray-800">0,50 UA</span></div>
+            <div class="flex justify-between"><span>Vaquillona &gt;2 años</span><span class="font-semibold text-gray-800">0,80 UA</span></div>
+            <div class="flex justify-between"><span>Vaquillona 1-2 años</span><span class="font-semibold text-gray-800">0,60 UA</span></div>
+            <div class="flex justify-between"><span>Caballo</span><span class="font-semibold text-gray-800">1,25 UA</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ── PANEL RESULTADOS ── */}
+      <aside class="space-y-4 lg:sticky lg:top-20">
+
+        {/* KPI principal */}
+        <div class="bg-[#1E4230] text-white rounded-2xl p-5 shadow-lg">
+          <p class="text-earth-400 text-[10px] font-bold uppercase tracking-widest mb-1">Carga animal</p>
+          <p class="text-white text-5xl font-bold tracking-tight leading-none mt-2">
+            <span id="r-carga">0,00</span>
+          </p>
+          <p class="text-earth-400 text-sm mt-1">UA / ha</p>
+
+          <div id="r-badge" class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-gray-700 text-gray-300">
+            — Ingresá tu rodeo
+          </div>
+
+          {/* Barra visual */}
+          <div class="mt-4">
+            <div class="flex justify-between text-[10px] text-earth-600 mb-1">
+              <span>0</span><span>0,7</span><span>1,1</span><span>1,5+</span>
+            </div>
+            <div class="relative h-3 bg-potrero-800 rounded-full overflow-hidden">
+              {/* Zona óptima */}
+              <div class="absolute top-0 h-full bg-green-900/50 rounded-full"
+                style="left: 46.7%; width: 26.6%"></div>
+              {/* Indicador */}
+              <div id="r-bar-indicator"
+                class="absolute top-0 h-full w-1 bg-earth-400 rounded-full transition-all duration-500"
+                style="left: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-earth-600 mt-1">
+              <span>Sub-carga</span><span class="text-green-400">Óptimo</span><span>Sobre-carga</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Métricas secundarias */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 space-y-3 text-sm">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500">Total UA en el campo</span>
+            <span class="font-bold text-gray-900" id="r-ua-total">0,00 UA</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500">Total cabezas</span>
+            <span class="font-bold text-gray-900" id="r-cab-total">0 cab.</span>
+          </div>
+          <div class="border-t border-gray-100 pt-3 flex justify-between items-center">
+            <span class="text-gray-500">Capacidad máx. del campo</span>
+            <span class="font-bold text-gray-900" id="r-cap-max">0 UA</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500">Sup. recomendada para tu rodeo</span>
+            <span class="font-bold text-gray-900" id="r-sup-rec">0 ha</span>
+          </div>
+        </div>
+
+        {/* Ajuste sugerido */}
+        <div id="panel-ajuste" class="bg-white rounded-2xl border border-gray-200 p-5 text-sm hidden">
+          <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Ajuste sugerido</p>
+          <p id="r-ajuste" class="text-gray-700 leading-relaxed"></p>
+        </div>
+
+        {/* CTA */}
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+          class="flex items-center gap-3 bg-[#25D366] hover:bg-[#1faf54] text-white rounded-2xl px-5 py-4 transition-colors shadow-md">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <div>
+            <p class="font-bold text-sm leading-none">¿Dudas sobre tu campo?</p>
+            <p class="text-white/80 text-xs mt-0.5">Escribinos por WhatsApp</p>
+          </div>
+        </a>
+
+        <p class="text-center text-xs text-gray-400">Potrero © {new Date().getFullYear()} · Bolivia 🇧🇴</p>
+      </aside>
+    </div>
+  </main>
+</div>
+</Layout>
+
+<script>
+  // ── Equivalencias UA ──────────────────────────────────
+  const CATEGORIAS: Record<string, { label: string; ua: number }> = {
+    toro:        { label: 'Toro',                ua: 1.25 },
+    vaca:        { label: 'Vaca',                ua: 1.00 },
+    vaca_cria:   { label: 'Vaca con cría',       ua: 1.20 },
+    nov_2:       { label: 'Novillo >2 años',     ua: 0.90 },
+    nov_1:       { label: 'Novillo 1-2 años',    ua: 0.70 },
+    ternero:     { label: 'Ternero <1 año',      ua: 0.50 },
+    vaq_2:       { label: 'Vaquillona >2 años',  ua: 0.80 },
+    vaq_1:       { label: 'Vaquillona 1-2 años', ua: 0.60 },
+    caballo:     { label: 'Caballo',             ua: 1.25 },
+  }
+
+  const BENCH_MIN = 0.7
+  const BENCH_MAX = 1.1
+  const BENCH_OPT = 1.0   // target for recommendations
+
+  let rowId = 0
+  const container = document.getElementById('rows-container')!
+
+  // ── Build select options ──────────────────────────────
+  function buildOptions(selected = 'vaca') {
+    return Object.entries(CATEGORIAS)
+      .map(([k, v]) => `<option value="${k}" ${k === selected ? 'selected' : ''}>${v.label}</option>`)
+      .join('')
+  }
+
+  // ── Add a row ─────────────────────────────────────────
+  function addRow(catKey = 'vaca', qty = 0) {
+    const id = rowId++
+    const ua = CATEGORIAS[catKey]?.ua ?? 1.0
+
+    const row = document.createElement('div')
+    row.dataset.id = String(id)
+    row.className = 'grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 items-center'
+    row.innerHTML = `
+      <select data-field="cat"
+        class="w-full border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 bg-gray-50 focus:outline-none focus:border-yellow-400 transition">
+        ${buildOptions(catKey)}
+      </select>
+      <input type="number" data-field="qty" min="0" value="${qty}"
+        class="w-full border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-right text-gray-900 bg-gray-50 focus:outline-none focus:border-yellow-400 transition" />
+      <div class="text-xs text-gray-500 text-right px-1 ua-equiv">${ua.toFixed(2)}</div>
+      <div class="text-xs font-bold text-[#1E4230] text-right px-1 row-ua">${(ua * qty).toFixed(2)}</div>
+      <button type="button" data-remove="${id}"
+        class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    `
+    container.appendChild(row)
+
+    // Listeners on the new row
+    row.querySelector('[data-field="cat"]')!.addEventListener('change', onRowChange)
+    row.querySelector('[data-field="qty"]')!.addEventListener('input', onRowChange)
+    row.querySelector('[data-remove]')!.addEventListener('click', () => { row.remove(); calc() })
+
+    calc()
+  }
+
+  // ── On row change: update UA equiv + totals ───────────
+  function onRowChange(e: Event) {
+    const row  = (e.target as HTMLElement).closest('[data-id]') as HTMLElement
+    const catEl = row.querySelector('[data-field="cat"]') as HTMLSelectElement
+    const qtyEl = row.querySelector('[data-field="qty"]')  as HTMLInputElement
+    const uaEq  = row.querySelector('.ua-equiv') as HTMLElement
+    const rowUa = row.querySelector('.row-ua')   as HTMLElement
+
+    const ua  = CATEGORIAS[catEl.value]?.ua ?? 1.0
+    const qty = parseFloat(qtyEl.value) || 0
+    uaEq.textContent  = ua.toFixed(2)
+    rowUa.textContent = (ua * qty).toFixed(2)
+    calc()
+  }
+
+  // ── Main calculation ──────────────────────────────────
+  function calc() {
+    const ha = parseFloat((document.getElementById('f-hectareas') as HTMLInputElement).value) || 0
+
+    let totalCab = 0
+    let totalUA  = 0
+
+    container.querySelectorAll('[data-id]').forEach(row => {
+      const catEl = row.querySelector('[data-field="cat"]') as HTMLSelectElement
+      const qtyEl = row.querySelector('[data-field="qty"]') as HTMLInputElement
+      const ua    = CATEGORIAS[catEl.value]?.ua ?? 1.0
+      const qty   = parseFloat(qtyEl.value) || 0
+      totalCab += qty
+      totalUA  += ua * qty
+    })
+
+    // Footer totals
+    document.getElementById('tot-cabezas')!.textContent = totalCab.toLocaleString('es-BO')
+    document.getElementById('tot-ua')!.textContent      = totalUA.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+    const carga   = ha > 0 ? totalUA / ha : 0
+    const capMax  = ha * BENCH_OPT
+    const supRec  = totalUA / BENCH_OPT
+
+    // Panel results
+    document.getElementById('r-carga')!.textContent    = carga.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    document.getElementById('r-ua-total')!.textContent = totalUA.toFixed(2) + ' UA'
+    document.getElementById('r-cab-total')!.textContent= totalCab.toLocaleString('es-BO') + ' cab.'
+    document.getElementById('r-cap-max')!.textContent  = capMax.toFixed(1) + ' UA'
+    document.getElementById('r-sup-rec')!.textContent  = supRec.toFixed(0) + ' ha'
+
+    // Bar indicator (max mapped to 1.5 UA/ha = 100%)
+    const pct = Math.min(100, (carga / 1.5) * 100)
+    ;(document.getElementById('r-bar-indicator') as HTMLElement).style.left = pct + '%'
+
+    // Badge + ajuste
+    const badge   = document.getElementById('r-badge')!
+    const panelAj = document.getElementById('panel-ajuste')!
+    const ajuste  = document.getElementById('r-ajuste')!
+
+    if (totalUA === 0 || ha === 0) {
+      badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-potrero-800 text-earth-400'
+      badge.textContent = '— Ingresá tu rodeo'
+      panelAj.classList.add('hidden')
+      return
+    }
+
+    if (carga < BENCH_MIN) {
+      badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-900/60 text-amber-300'
+      badge.textContent = `⬇ Sub-carga · ${carga.toFixed(2)} UA/ha`
+      panelAj.classList.remove('hidden')
+      const puedeAgregar = Math.floor((capMax - totalUA) / 1.0)
+      ajuste.textContent = `Tu campo tiene capacidad para ${capMax.toFixed(1)} UA totales. Con tu rodeo actual (${totalUA.toFixed(1)} UA) podrías incorporar aproximadamente ${puedeAgregar} vacas más sin superar la carga óptima.`
+    } else if (carga <= BENCH_MAX) {
+      badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-green-900/60 text-green-300'
+      badge.textContent = `✓ Carga óptima · ${carga.toFixed(2)} UA/ha`
+      panelAj.classList.remove('hidden')
+      ajuste.textContent = `Estás dentro del rango óptimo para el trópico boliviano (${BENCH_MIN}–${BENCH_MAX} UA/ha). Tu campo y tu rodeo están bien equilibrados.`
+    } else {
+      badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-red-900/60 text-red-300'
+      badge.textContent = `⬆ Sobre-carga · ${carga.toFixed(2)} UA/ha`
+      panelAj.classList.remove('hidden')
+      const excesoUA   = totalUA - capMax
+      const reducirCab = Math.ceil(excesoUA / 1.0)
+      ajuste.textContent = `Excedés la carga óptima en ${excesoUA.toFixed(1)} UA. Para volver al rango recomendado deberías reducir el rodeo en ~${reducirCab} vacas equivalentes, o ampliar la superficie ganadera a ${supRec.toFixed(0)} ha.`
+    }
+  }
+
+  // ── Init ─────────────────────────────────────────────
+  document.getElementById('btn-add')!.addEventListener('click', () => addRow())
+  document.getElementById('f-hectareas')!.addEventListener('input', calc)
+
+  // Seed with typical herd
+  addRow('vaca',      150)
+  addRow('vaca_cria',  80)
+  addRow('nov_2',      40)
+  addRow('ternero',    60)
+  addRow('toro',       10)
+</script>
