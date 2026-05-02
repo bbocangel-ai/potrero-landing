@@ -1,0 +1,348 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const BASE        = import.meta.env.BASE_URL
+const logoSrc     = `${BASE}brand/isotipo-color.png`.replace(/\/+/g, '/')
+const hubUrl      = `${BASE}herramientas/`.replace(/\/+/g, '/')
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
+---
+
+<Layout
+  title="Punto de Equilibrio — Herramientas Potrero"
+  description="Calculá el precio mínimo de venta en Bs/kg para no perder en tu operación ganadera. Ingresá adquisición, costos diarios, días y peso final."
+>
+<div class="min-h-screen bg-[#F5F5F5] font-sans">
+
+  {/* ── HEADER ── */}
+  <header class="bg-[#1E4230] text-white px-5 py-4 flex items-center justify-between gap-4 shadow-md sticky top-0 z-40">
+    <a href={hubUrl} class="flex items-center gap-2 text-earth-300 hover:text-white transition-colors text-sm">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Herramientas
+    </a>
+    <a href={hubUrl} class="flex items-center gap-2">
+      <img src={logoSrc} alt="Potrero" class="w-7 h-7 object-contain" />
+      <span class="font-display font-medium text-[1rem] tracking-tight">Potrero</span>
+    </a>
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+      class="text-xs font-semibold bg-[#25D366] hover:bg-[#1faf54] text-white px-3 py-1.5 rounded-lg transition-colors hidden sm:block">
+      WhatsApp
+    </a>
+  </header>
+
+  {/* ── TITLE BAR ── */}
+  <div class="bg-white border-b border-gray-200 px-5 py-4">
+    <div class="max-w-3xl mx-auto flex items-center gap-4">
+      <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><path d="M8 5l-3 7 3 7"/><path d="M16 5l3 7-3 7"/></svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-gray-900 text-lg leading-tight">Punto de Equilibrio</h1>
+        <p class="text-gray-500 text-xs mt-0.5">Precio mínimo de venta en Bs/kg PV para no tener pérdidas</p>
+      </div>
+    </div>
+  </div>
+
+  {/* ── MAIN ── */}
+  <main class="max-w-3xl mx-auto px-4 py-6 space-y-5">
+
+    {/* ── FORMULARIO ── */}
+    <div class="bg-white rounded-2xl border border-gray-200 p-5 md:p-6">
+      <h2 class="font-bold text-gray-800 text-sm mb-5 flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">1</span>
+        Datos de la simulación
+      </h2>
+
+      {/* Título opcional */}
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Título de la simulación <span class="text-gray-400 font-normal">(opcional)</span></label>
+        <input id="f-titulo" type="text" placeholder="Ej: Lote novillos gestión 2025"
+          class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-purple-400 focus:bg-white transition" />
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+
+        <div class="field-wrap">
+          <label for="f-adq">Valor de adquisición por animal <span class="req">*</span></label>
+          <p class="field-hint">Costo total pagado en la compra</p>
+          <div class="input-pre">
+            <span>Bs</span>
+            <input id="f-adq" type="number" min="0" step="10" value="5040" />
+          </div>
+        </div>
+
+        <div class="field-wrap">
+          <label for="f-costo-diario">Costo diario por animal <span class="req">*</span></label>
+          <p class="field-hint">Suma de todos los costos medios diarios</p>
+          <div class="input-suf">
+            <input id="f-costo-diario" type="number" min="0" step="0.5" value="3.5" />
+            <span>Bs/día</span>
+          </div>
+        </div>
+
+        <div class="field-wrap">
+          <label for="f-dias">Días del ciclo <span class="req">*</span></label>
+          <p class="field-hint">Período total de recría / engorde</p>
+          <div class="input-suf">
+            <input id="f-dias" type="number" min="1" value="180" />
+            <span>días</span>
+          </div>
+        </div>
+
+        <div class="field-wrap">
+          <label for="f-peso-final">Peso final del animal <span class="req">*</span></label>
+          <p class="field-hint">Peso vivo esperado en la venta</p>
+          <div class="input-suf">
+            <input id="f-peso-final" type="number" min="1" value="406" />
+            <span>kg PV</span>
+          </div>
+        </div>
+
+        <div class="field-wrap sm:col-span-2">
+          <label for="f-precio-mercado">Precio de mercado actual <span class="req">*</span></label>
+          <p class="field-hint">Precio de referencia para la venta</p>
+          <div class="input-pre" style="max-width:220px">
+            <span>Bs/kg PV</span>
+            <input id="f-precio-mercado" type="number" min="0" step="0.5" value="22" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {/* ── RESULTADOS ── */}
+    <div id="section-results" class="space-y-4">
+
+      {/* Fila: Resumen + Comparativo */}
+      <div class="grid sm:grid-cols-2 gap-4">
+
+        {/* Resumen financiero */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5">
+          <h3 class="font-bold text-gray-800 text-sm mb-4">Resumen financiero</h3>
+          <div class="space-y-2.5 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Peso final (venta)</span>
+              <span class="font-semibold text-gray-900" id="r-peso-final">— kg</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Ingreso a precio mercado</span>
+              <span class="font-semibold text-gray-900" id="r-ingreso">Bs —</span>
+            </div>
+            <div class="border-t border-gray-100 pt-2.5">
+              <div class="flex justify-between">
+                <span class="text-gray-500">Costo adquisición</span>
+                <span class="font-semibold text-gray-900" id="r-costo-adq">Bs —</span>
+              </div>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Costos operativos del ciclo</span>
+              <span class="font-semibold text-gray-900" id="r-costo-op">Bs —</span>
+            </div>
+            <div class="border-t border-gray-100 pt-2.5 flex justify-between">
+              <span class="font-bold text-gray-700">Total costos</span>
+              <span class="font-bold text-gray-900" id="r-total-costos">Bs —</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Comparativo de precios */}
+        <div class="bg-white rounded-2xl border border-gray-200 p-5">
+          <h3 class="font-bold text-gray-800 text-sm mb-4">Comparativo de precios</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Precio de mercado</span>
+              <span class="font-bold text-gray-900" id="r-precio-mercado-txt">Bs —/kg</span>
+            </div>
+            <div class="flex justify-between items-center bg-purple-50 border border-purple-200 rounded-xl px-3 py-2">
+              <span class="font-semibold text-purple-800">Punto de equilibrio</span>
+              <span class="font-bold text-purple-700 text-base" id="r-pe">Bs —/kg</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Diferencia</span>
+              <span class="font-bold text-lg" id="r-diferencia">Bs —/kg</span>
+            </div>
+          </div>
+
+          {/* Barra margen de seguridad */}
+          <div class="mt-4">
+            <p class="text-[10px] text-gray-400 uppercase tracking-wide mb-1.5">Margen sobre el punto de equilibrio</p>
+            <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+              <div id="r-barra-margen" class="h-full rounded-full transition-all duration-500 bg-purple-400" style="width:0%"></div>
+            </div>
+            <p class="text-[10px] text-gray-400 mt-1" id="r-barra-label">—</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Resultado principal */}
+      <div id="panel-resultado" class="rounded-2xl p-6 border-2 transition-all duration-300 bg-gray-100 border-gray-200">
+        <div class="flex items-center gap-3 mb-4">
+          <span id="r-emoji" class="text-3xl">—</span>
+          <div>
+            <p id="r-estado-titulo" class="font-bold text-lg leading-tight">—</p>
+            <p id="r-estado-sub" class="text-sm opacity-70">Ingresá los datos para ver el resultado</p>
+          </div>
+        </div>
+        <hr class="opacity-20 mb-4" />
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div>
+            <p class="text-xs opacity-60 uppercase tracking-wide mb-1">Resultado por animal</p>
+            <p class="text-2xl font-bold leading-none" id="r-resultado-animal">Bs —</p>
+          </div>
+          <div>
+            <p class="text-xs opacity-60 uppercase tracking-wide mb-1">Resultado por kg</p>
+            <p class="text-2xl font-bold leading-none" id="r-resultado-kg">Bs —/kg</p>
+          </div>
+          <div>
+            <p class="text-xs opacity-60 uppercase tracking-wide mb-1">Margen sobre costos</p>
+            <p class="text-2xl font-bold leading-none" id="r-margen">— %</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Análisis en texto */}
+      <div id="panel-analisis" class="bg-white rounded-2xl border border-gray-200 p-5">
+        <h3 class="font-bold text-gray-800 text-sm mb-2">Análisis</h3>
+        <p id="r-analisis" class="text-gray-600 text-sm leading-relaxed">Completá los datos para ver el análisis.</p>
+      </div>
+
+      {/* Acciones */}
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="window.print()"
+          class="flex-1 flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir / Exportar PDF
+        </button>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+          class="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1faf54] text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Consultar con Potrero
+        </a>
+      </div>
+
+      <p class="text-center text-xs text-gray-400 pb-2">Potrero © {new Date().getFullYear()} · Herramienta gratuita · Bolivia 🇧🇴</p>
+    </div>
+
+  </main>
+</div>
+</Layout>
+
+<style>
+  .field-wrap { @apply flex flex-col gap-1; }
+  .field-wrap label { @apply text-xs font-semibold text-gray-700; }
+  .req { @apply text-red-400; }
+  .field-hint { @apply text-[11px] text-purple-500 -mt-0.5; }
+
+  .input-pre {
+    @apply flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50 focus-within:border-purple-400 focus-within:bg-white transition;
+  }
+  .input-pre span { @apply bg-gray-100 border-r border-gray-200 px-3 py-2.5 text-xs text-gray-500 font-medium shrink-0; }
+  .input-pre input { @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-gray-900 focus:outline-none border-none min-w-0; }
+
+  .input-suf {
+    @apply flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50 focus-within:border-purple-400 focus-within:bg-white transition;
+  }
+  .input-suf input { @apply flex-1 bg-transparent px-3 py-2.5 text-sm text-gray-900 focus:outline-none border-none min-w-0; }
+  .input-suf span { @apply bg-gray-100 border-l border-gray-200 px-3 py-2.5 text-xs text-gray-500 font-medium shrink-0; }
+
+  @media print {
+    header { display: none !important; }
+    .bg-\[#F5F5F5\] { background: white !important; }
+  }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!
+  const inp = (id: string) => parseFloat(($(`f-${id}`) as HTMLInputElement).value) || 0
+  const fmt = (n: number, d = 2) => n.toLocaleString('es-BO', { minimumFractionDigits: d, maximumFractionDigits: d })
+
+  function calc() {
+    const adq          = inp('adq')
+    const costoDiario  = inp('costo-diario')
+    const dias         = Math.max(1, inp('dias'))
+    const pesoFinal    = inp('peso-final')
+    const precioMercado= inp('precio-mercado')
+
+    // Costos
+    const costoOp    = costoDiario * dias
+    const totalCostos = adq + costoOp
+
+    // Ingresos al precio de mercado
+    const ingreso = precioFinal => pesoFinal * precioFinal
+
+    // Punto de equilibrio (Bs/kg PV)
+    const pe = pesoFinal > 0 ? totalCostos / pesoFinal : 0
+
+    // Con precio de mercado
+    const ingresoMercado = pesoFinal * precioMercado
+    const resultado      = ingresoMercado - totalCostos
+    const resultadoKg    = pesoFinal > 0 ? resultado / pesoFinal : 0
+    const margen         = totalCostos > 0 ? (resultado / totalCostos) * 100 : 0
+    const diferencia     = precioMercado - pe   // Bs/kg sobre el PE
+
+    // ── Actualizar DOM ──────────────────────────────────
+    $('r-peso-final').textContent       = `${fmt(pesoFinal, 0)} kg`
+    $('r-ingreso').textContent          = `Bs ${fmt(ingresoMercado)}`
+    $('r-costo-adq').textContent        = `Bs ${fmt(adq)}`
+    $('r-costo-op').textContent         = `Bs ${fmt(costoOp)}`
+    $('r-total-costos').textContent     = `Bs ${fmt(totalCostos)}`
+    $('r-precio-mercado-txt').textContent = `Bs ${fmt(precioMercado)}/kg`
+    $('r-pe').textContent               = `Bs ${fmt(pe)}/kg`
+
+    // Diferencia coloreada
+    const difEl = $('r-diferencia')
+    difEl.textContent = `${diferencia >= 0 ? '+' : ''}Bs ${fmt(diferencia)}/kg`
+    difEl.className   = `font-bold text-lg ${diferencia >= 0 ? 'text-green-600' : 'text-red-600'}`
+
+    // Barra margen de seguridad
+    // Muestra qué % está el precio de mercado por encima del PE
+    // 0% = en PE, 100% = 50% por encima del PE (escala visual)
+    const margenPct    = pe > 0 ? Math.max(0, Math.min(100, (diferencia / pe) * 200)) : 0
+    const barraEl      = $('r-barra-margen') as HTMLElement
+    barraEl.style.width = margenPct + '%'
+    barraEl.className   = `h-full rounded-full transition-all duration-500 ${diferencia >= 0 ? 'bg-green-500' : 'bg-red-400'}`
+    $('r-barra-label').textContent = pe > 0
+      ? `Mercado ${Math.abs(diferencia / pe * 100).toFixed(1)}% ${diferencia >= 0 ? 'por encima' : 'por debajo'} del punto de equilibrio`
+      : '—'
+
+    // Panel resultado
+    const panel    = $('panel-resultado')
+    const emoji    = $('r-emoji')
+    const titulo   = $('r-estado-titulo')
+    const sub      = $('r-estado-sub')
+    const resAnimal= $('r-resultado-animal')
+    const resKg    = $('r-resultado-kg')
+    const margenEl = $('r-margen')
+    const analisis = $('r-analisis')
+
+    const rentable = resultado > 0
+
+    panel.className = rentable
+      ? 'rounded-2xl p-6 border-2 transition-all duration-300 bg-green-600 border-green-700 text-white'
+      : 'rounded-2xl p-6 border-2 transition-all duration-300 bg-red-500 border-red-600 text-white'
+
+    emoji.textContent  = rentable ? '💰' : '⚠️'
+    titulo.textContent = rentable ? 'Operación Lucrativa' : 'Operación en Pérdida'
+    sub.textContent    = rentable
+      ? `El precio de mercado (Bs ${fmt(precioMercado)}/kg) está por encima del punto de equilibrio`
+      : `El precio de mercado (Bs ${fmt(precioMercado)}/kg) está por debajo del punto de equilibrio`
+
+    resAnimal.textContent = `${resultado >= 0 ? '' : '-'}Bs ${fmt(Math.abs(resultado))}`
+    resKg.textContent     = `${resultadoKg >= 0 ? '' : '-'}Bs ${fmt(Math.abs(resultadoKg))}/kg`
+    margenEl.textContent  = `${margen >= 0 ? '+' : ''}${fmt(margen, 1)} %`
+
+    // Análisis
+    const titulo_sim = ($('f-titulo') as HTMLInputElement).value.trim()
+    const prefijo    = titulo_sim ? `"${titulo_sim}": ` : ''
+
+    if (rentable) {
+      analisis.innerHTML = `${prefijo}Con el precio de mercado a <strong>Bs ${fmt(precioMercado)}/kg</strong>, tu punto de equilibrio es <strong>Bs ${fmt(pe)}/kg</strong>. Tenés un margen de <strong class="text-green-700">Bs ${fmt(diferencia)}/kg</strong> (${fmt(Math.abs(diferencia / pe * 100), 1)}%) sobre el punto de equilibrio. Resultado: <strong class="text-green-700">Bs ${fmt(resultado)}</strong> por animal.`
+    } else {
+      analisis.innerHTML = `${prefijo}Con el precio de mercado a <strong>Bs ${fmt(precioMercado)}/kg</strong>, tu punto de equilibrio es <strong>Bs ${fmt(pe)}/kg</strong>. El precio debería subir <strong class="text-red-600">Bs ${fmt(Math.abs(diferencia))}/kg</strong> para no perder. Resultado actual: <strong class="text-red-600">–Bs ${fmt(Math.abs(resultado))}</strong> por animal.`
+    }
+  }
+
+  // Listeners
+  document.querySelectorAll('input').forEach(el => el.addEventListener('input', calc))
+
+  calc()
+</script>
