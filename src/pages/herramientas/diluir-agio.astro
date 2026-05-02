@@ -125,6 +125,12 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
         </div>
 
         <div class="result-card rc-highlight">
+          <p class="rc-label">Ágio %</p>
+          <p class="rc-value" id="r-agio-pct">0,00 %</p>
+          <p class="rc-sub">(compra − venta) ÷ venta × 100</p>
+        </div>
+
+        <div class="result-card">
           <p class="rc-label">Ágio total por cabeza</p>
           <p class="rc-value" id="r-agio-total">Bs 0,00</p>
           <p class="rc-sub" id="r-agio-total-sub">ágio/kg × peso compra</p>
@@ -286,8 +292,13 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
     // ── Update DOM ───────────────────────────────────────
 
     // Cards
+    const agioPct = precioMercado > 0 ? ((precioPagado - precioMercado) / precioMercado) * 100 : 0
+
     $('r-agio-kg').textContent       = `Bs ${fmt(Math.abs(agioKg))}/kg`
     $('r-agio-kg-sub').textContent   = agioKg > 0 ? `Pagaste Bs ${fmt(agioKg)} más por kg` : agioKg < 0 ? `Ahorraste Bs ${fmt(Math.abs(agioKg))} por kg` : 'Precio exacto de mercado'
+    const pctEl = $('r-agio-pct')
+    pctEl.textContent = `${agioPct >= 0 ? '+' : ''}${fmt(agioPct, 2)} %`
+    pctEl.className   = `rc-value ${agioPct > 0.01 ? 'text-orange-600' : agioPct < -0.01 ? 'text-green-600' : 'text-gray-900'}`
     $('r-agio-total').textContent    = `Bs ${fmt(Math.abs(agioTotal))}`
     $('r-agio-total-sub').textContent= agioKg > 0 ? `Extra pagado por el lote` : agioKg < 0 ? `Ahorro vs. precio de mercado` : `Sin ágio`
     $('r-costo-adq').textContent     = `Bs ${fmt(costoAdq)}`

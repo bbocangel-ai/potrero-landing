@@ -8,8 +8,8 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
 ---
 
 <Layout
-  title="Tasa de Carga Animal — Herramientas Potrero"
-  description="Calculá la carga animal de tu estancia en UA/ha. Ingresá todas las categorías de tu rodeo y descubrí si estás sub-cargado, óptimo o sobre-cargado."
+  title="Carga Animal — Herramientas Potrero"
+  description="Calculá la carga animal de tu estancia en UA/ha y kg/ha. Ingresá todas las categorías del rodeo y optimizá el uso de tus potreros."
 >
 <div class="min-h-screen bg-[#F5F5F5] font-sans">
 
@@ -36,8 +36,8 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CA8A04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
       <div>
-        <h1 class="font-bold text-gray-900 text-lg leading-tight">Tasa de Carga Animal</h1>
-        <p class="text-gray-500 text-xs mt-0.5">Calculá UA/ha y optimizá el uso de tus potreros · Trópico boliviano</p>
+        <h1 class="font-bold text-gray-900 text-lg leading-tight">Carga Animal</h1>
+        <p class="text-gray-500 text-xs mt-0.5">Calculá UA/ha y kg/ha · Optimizá el uso de tus potreros</p>
       </div>
     </div>
   </div>
@@ -74,26 +74,28 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
             <button id="btn-add" type="button"
               class="flex items-center gap-1.5 text-xs font-semibold text-[#1E4230] border border-[#1E4230]/30 hover:bg-[#1E4230] hover:text-white px-3 py-1.5 rounded-lg transition-colors">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Agregar categoría
+              Agregar
             </button>
           </div>
 
           {/* Table header */}
-          <div class="grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 px-1 mb-2">
+          <div class="grid grid-cols-[1fr_72px_80px_64px_68px_32px] gap-2 px-1 mb-2">
             <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide">Categoría</p>
             <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Cabezas</p>
-            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Equiv. UA</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Peso prom.</p>
+            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">UA eq.</p>
             <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide text-right">Total UA</p>
-            <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide"></p>
+            <p></p>
           </div>
 
           {/* Rows container */}
           <div id="rows-container" class="space-y-2"></div>
 
           {/* Totals */}
-          <div class="mt-3 pt-3 border-t border-gray-100 grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 px-1">
+          <div class="mt-3 pt-3 border-t border-gray-100 grid grid-cols-[1fr_72px_80px_64px_68px_32px] gap-2 px-1">
             <p class="text-sm font-bold text-gray-700">Total</p>
             <p class="text-sm font-bold text-gray-900 text-right" id="tot-cabezas">0</p>
+            <p class="text-sm font-bold text-gray-700 text-right" id="tot-kg">0 kg</p>
             <p class="text-sm text-gray-400 text-right">—</p>
             <p class="text-sm font-bold text-[#1E4230] text-right" id="tot-ua">0,00</p>
             <p></p>
@@ -102,17 +104,17 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
 
         {/* Referencia UA */}
         <div class="bg-white rounded-2xl border border-gray-200 p-5">
-          <h2 class="font-bold text-gray-800 text-sm mb-3">Equivalencias UA — Trópico boliviano</h2>
+          <h2 class="font-bold text-gray-800 text-sm mb-3">Equivalencias UA estándar</h2>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1.5 text-xs text-gray-600">
-            <div class="flex justify-between"><span>Toro</span><span class="font-semibold text-gray-800">1,25 UA</span></div>
-            <div class="flex justify-between"><span>Vaca</span><span class="font-semibold text-gray-800">1,00 UA</span></div>
-            <div class="flex justify-between"><span>Vaca c/ cría</span><span class="font-semibold text-gray-800">1,20 UA</span></div>
-            <div class="flex justify-between"><span>Novillo &gt;2 años</span><span class="font-semibold text-gray-800">0,90 UA</span></div>
-            <div class="flex justify-between"><span>Novillo 1-2 años</span><span class="font-semibold text-gray-800">0,70 UA</span></div>
-            <div class="flex justify-between"><span>Ternero &lt;1 año</span><span class="font-semibold text-gray-800">0,50 UA</span></div>
-            <div class="flex justify-between"><span>Vaquillona &gt;2 años</span><span class="font-semibold text-gray-800">0,80 UA</span></div>
-            <div class="flex justify-between"><span>Vaquillona 1-2 años</span><span class="font-semibold text-gray-800">0,60 UA</span></div>
-            <div class="flex justify-between"><span>Caballo</span><span class="font-semibold text-gray-800">1,25 UA</span></div>
+            <div class="flex justify-between"><span>Toro</span><span class="font-semibold text-gray-800">1,25 UA · ~500 kg</span></div>
+            <div class="flex justify-between"><span>Vaca</span><span class="font-semibold text-gray-800">1,00 UA · ~420 kg</span></div>
+            <div class="flex justify-between"><span>Vaca c/ cría</span><span class="font-semibold text-gray-800">1,20 UA · ~450 kg</span></div>
+            <div class="flex justify-between"><span>Novillo &gt;2 años</span><span class="font-semibold text-gray-800">0,90 UA · ~380 kg</span></div>
+            <div class="flex justify-between"><span>Novillo 1-2 años</span><span class="font-semibold text-gray-800">0,70 UA · ~260 kg</span></div>
+            <div class="flex justify-between"><span>Ternero &lt;1 año</span><span class="font-semibold text-gray-800">0,50 UA · ~150 kg</span></div>
+            <div class="flex justify-between"><span>Vaquillona &gt;2 años</span><span class="font-semibold text-gray-800">0,80 UA · ~310 kg</span></div>
+            <div class="flex justify-between"><span>Vaquillona 1-2 años</span><span class="font-semibold text-gray-800">0,60 UA · ~210 kg</span></div>
+            <div class="flex justify-between"><span>Caballo</span><span class="font-semibold text-gray-800">1,25 UA · ~450 kg</span></div>
           </div>
         </div>
 
@@ -121,7 +123,7 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
       {/* ── PANEL RESULTADOS ── */}
       <aside class="space-y-4 lg:sticky lg:top-20">
 
-        {/* KPI principal */}
+        {/* KPI principal — UA/ha */}
         <div class="bg-[#1E4230] text-white rounded-2xl p-5 shadow-lg">
           <p class="text-earth-400 text-[10px] font-bold uppercase tracking-widest mb-1">Carga animal</p>
           <p class="text-white text-5xl font-bold tracking-tight leading-none mt-2">
@@ -129,7 +131,13 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
           </p>
           <p class="text-earth-400 text-sm mt-1">UA / ha</p>
 
-          <div id="r-badge" class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-gray-700 text-gray-300">
+          {/* kg/ha secundario */}
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="text-earth-300 text-xl font-bold" id="r-kgha">0</span>
+            <span class="text-earth-500 text-sm">kg / ha</span>
+          </div>
+
+          <div id="r-badge" class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-potrero-800 text-earth-400">
             — Ingresá tu rodeo
           </div>
 
@@ -139,13 +147,8 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
               <span>0</span><span>0,7</span><span>1,1</span><span>1,5+</span>
             </div>
             <div class="relative h-3 bg-potrero-800 rounded-full overflow-hidden">
-              {/* Zona óptima */}
-              <div class="absolute top-0 h-full bg-green-900/50 rounded-full"
-                style="left: 46.7%; width: 26.6%"></div>
-              {/* Indicador */}
-              <div id="r-bar-indicator"
-                class="absolute top-0 h-full w-1 bg-earth-400 rounded-full transition-all duration-500"
-                style="left: 0%"></div>
+              <div class="absolute top-0 h-full bg-green-900/50 rounded-full" style="left:46.7%;width:26.6%"></div>
+              <div id="r-bar-indicator" class="absolute top-0 h-full w-1 bg-earth-400 rounded-full transition-all duration-500" style="left:0%"></div>
             </div>
             <div class="flex justify-between text-[10px] text-earth-600 mt-1">
               <span>Sub-carga</span><span class="text-green-400">Óptimo</span><span>Sobre-carga</span>
@@ -158,6 +161,10 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
           <div class="flex justify-between items-center">
             <span class="text-gray-500">Total UA en el campo</span>
             <span class="font-bold text-gray-900" id="r-ua-total">0,00 UA</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500">Total kg del rodeo</span>
+            <span class="font-bold text-gray-900" id="r-kg-total">0 kg</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-500">Total cabezas</span>
@@ -197,50 +204,55 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
 </Layout>
 
 <script>
-  // ── Equivalencias UA ──────────────────────────────────
-  const CATEGORIAS: Record<string, { label: string; ua: number }> = {
-    toro:        { label: 'Toro',                ua: 1.25 },
-    vaca:        { label: 'Vaca',                ua: 1.00 },
-    vaca_cria:   { label: 'Vaca con cría',       ua: 1.20 },
-    nov_2:       { label: 'Novillo >2 años',     ua: 0.90 },
-    nov_1:       { label: 'Novillo 1-2 años',    ua: 0.70 },
-    ternero:     { label: 'Ternero <1 año',      ua: 0.50 },
-    vaq_2:       { label: 'Vaquillona >2 años',  ua: 0.80 },
-    vaq_1:       { label: 'Vaquillona 1-2 años', ua: 0.60 },
-    caballo:     { label: 'Caballo',             ua: 1.25 },
+  // ── Categorías: UA equiv + peso promedio default (kg) ──
+  const CATEGORIAS: Record<string, { label: string; ua: number; pesoDefault: number }> = {
+    toro:      { label: 'Toro',                ua: 1.25, pesoDefault: 500 },
+    vaca:      { label: 'Vaca',                ua: 1.00, pesoDefault: 420 },
+    vaca_cria: { label: 'Vaca con cría',       ua: 1.20, pesoDefault: 450 },
+    nov_2:     { label: 'Novillo >2 años',     ua: 0.90, pesoDefault: 380 },
+    nov_1:     { label: 'Novillo 1-2 años',    ua: 0.70, pesoDefault: 260 },
+    ternero:   { label: 'Ternero <1 año',      ua: 0.50, pesoDefault: 150 },
+    vaq_2:     { label: 'Vaquillona >2 años',  ua: 0.80, pesoDefault: 310 },
+    vaq_1:     { label: 'Vaquillona 1-2 años', ua: 0.60, pesoDefault: 210 },
+    caballo:   { label: 'Caballo',             ua: 1.25, pesoDefault: 450 },
   }
 
   const BENCH_MIN = 0.7
   const BENCH_MAX = 1.1
-  const BENCH_OPT = 1.0   // target for recommendations
+  const BENCH_OPT = 1.0
 
   let rowId = 0
   const container = document.getElementById('rows-container')!
+  const fmt = (n: number, d = 0) => n.toLocaleString('es-BO', { minimumFractionDigits: d, maximumFractionDigits: d })
 
-  // ── Build select options ──────────────────────────────
   function buildOptions(selected = 'vaca') {
     return Object.entries(CATEGORIAS)
       .map(([k, v]) => `<option value="${k}" ${k === selected ? 'selected' : ''}>${v.label}</option>`)
       .join('')
   }
 
-  // ── Add a row ─────────────────────────────────────────
-  function addRow(catKey = 'vaca', qty = 0) {
-    const id = rowId++
-    const ua = CATEGORIAS[catKey]?.ua ?? 1.0
+  function addRow(catKey = 'vaca', qty = 0, pesoOverride?: number) {
+    const id   = rowId++
+    const cat  = CATEGORIAS[catKey]
+    const peso = pesoOverride ?? cat.pesoDefault
 
     const row = document.createElement('div')
     row.dataset.id = String(id)
-    row.className = 'grid grid-cols-[1fr_90px_80px_80px_36px] gap-2 items-center'
+    row.className = 'grid grid-cols-[1fr_72px_80px_64px_68px_32px] gap-2 items-center'
     row.innerHTML = `
       <select data-field="cat"
-        class="w-full border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 bg-gray-50 focus:outline-none focus:border-yellow-400 transition">
+        class="w-full border border-gray-200 rounded-lg px-2 py-2 text-xs text-gray-800 bg-gray-50 focus:outline-none focus:border-yellow-400 transition">
         ${buildOptions(catKey)}
       </select>
       <input type="number" data-field="qty" min="0" value="${qty}"
-        class="w-full border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-right text-gray-900 bg-gray-50 focus:outline-none focus:border-yellow-400 transition" />
-      <div class="text-xs text-gray-500 text-right px-1 ua-equiv">${ua.toFixed(2)}</div>
-      <div class="text-xs font-bold text-[#1E4230] text-right px-1 row-ua">${(ua * qty).toFixed(2)}</div>
+        class="w-full border border-gray-200 rounded-lg px-2 py-2 text-xs text-right text-gray-900 bg-gray-50 focus:outline-none focus:border-yellow-400 transition" />
+      <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-yellow-50 focus-within:border-yellow-400 transition">
+        <input type="number" data-field="peso" min="1" value="${peso}"
+          class="flex-1 w-full bg-transparent px-2 py-2 text-xs text-right text-gray-900 focus:outline-none border-none min-w-0" />
+        <span class="text-[9px] text-gray-400 pr-1.5">kg</span>
+      </div>
+      <div class="text-xs text-gray-500 text-right px-1 ua-equiv">${cat.ua.toFixed(2)}</div>
+      <div class="text-xs font-bold text-[#1E4230] text-right px-1 row-ua">${(cat.ua * qty).toFixed(2)}</div>
       <button type="button" data-remove="${id}"
         class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -248,68 +260,81 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
     `
     container.appendChild(row)
 
-    // Listeners on the new row
     row.querySelector('[data-field="cat"]')!.addEventListener('change', onRowChange)
     row.querySelector('[data-field="qty"]')!.addEventListener('input', onRowChange)
+    row.querySelector('[data-field="peso"]')!.addEventListener('input', onRowChange)
     row.querySelector('[data-remove]')!.addEventListener('click', () => { row.remove(); calc() })
 
     calc()
   }
 
-  // ── On row change: update UA equiv + totals ───────────
   function onRowChange(e: Event) {
-    const row  = (e.target as HTMLElement).closest('[data-id]') as HTMLElement
-    const catEl = row.querySelector('[data-field="cat"]') as HTMLSelectElement
+    const row   = (e.target as HTMLElement).closest('[data-id]') as HTMLElement
+    const catEl = row.querySelector('[data-field="cat"]')  as HTMLSelectElement
     const qtyEl = row.querySelector('[data-field="qty"]')  as HTMLInputElement
     const uaEq  = row.querySelector('.ua-equiv') as HTMLElement
     const rowUa = row.querySelector('.row-ua')   as HTMLElement
 
-    const ua  = CATEGORIAS[catEl.value]?.ua ?? 1.0
+    const cat = CATEGORIAS[catEl.value]
     const qty = parseFloat(qtyEl.value) || 0
-    uaEq.textContent  = ua.toFixed(2)
-    rowUa.textContent = (ua * qty).toFixed(2)
+
+    // Auto-fill peso default when category changes
+    if ((e.target as HTMLElement).dataset.field === 'cat') {
+      const pesoEl = row.querySelector('[data-field="peso"]') as HTMLInputElement
+      pesoEl.value = String(cat.pesoDefault)
+    }
+
+    uaEq.textContent  = cat.ua.toFixed(2)
+    rowUa.textContent = (cat.ua * qty).toFixed(2)
     calc()
   }
 
-  // ── Main calculation ──────────────────────────────────
   function calc() {
     const ha = parseFloat((document.getElementById('f-hectareas') as HTMLInputElement).value) || 0
 
     let totalCab = 0
     let totalUA  = 0
+    let totalKg  = 0
 
     container.querySelectorAll('[data-id]').forEach(row => {
-      const catEl = row.querySelector('[data-field="cat"]') as HTMLSelectElement
-      const qtyEl = row.querySelector('[data-field="qty"]') as HTMLInputElement
-      const ua    = CATEGORIAS[catEl.value]?.ua ?? 1.0
-      const qty   = parseFloat(qtyEl.value) || 0
+      const catEl  = row.querySelector('[data-field="cat"]')  as HTMLSelectElement
+      const qtyEl  = row.querySelector('[data-field="qty"]')  as HTMLInputElement
+      const pesoEl = row.querySelector('[data-field="peso"]') as HTMLInputElement
+      const ua     = CATEGORIAS[catEl.value]?.ua ?? 1.0
+      const qty    = parseFloat(qtyEl.value)  || 0
+      const peso   = parseFloat(pesoEl.value) || 0
       totalCab += qty
       totalUA  += ua * qty
+      totalKg  += peso * qty
     })
 
     // Footer totals
-    document.getElementById('tot-cabezas')!.textContent = totalCab.toLocaleString('es-BO')
-    document.getElementById('tot-ua')!.textContent      = totalUA.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    document.getElementById('tot-cabezas')!.textContent = fmt(totalCab)
+    document.getElementById('tot-ua')!.textContent      = fmt(totalUA, 2)
+    document.getElementById('tot-kg')!.textContent      = fmt(totalKg) + ' kg'
 
-    const carga   = ha > 0 ? totalUA / ha : 0
-    const capMax  = ha * BENCH_OPT
-    const supRec  = totalUA / BENCH_OPT
+    const carga  = ha > 0 ? totalUA / ha  : 0
+    const kgHa   = ha > 0 ? totalKg / ha  : 0
+    const capMax = ha * BENCH_OPT
+    const supRec = totalUA > 0 ? totalUA / BENCH_OPT : 0
 
-    // Panel results
-    document.getElementById('r-carga')!.textContent    = carga.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    document.getElementById('r-ua-total')!.textContent = totalUA.toFixed(2) + ' UA'
-    document.getElementById('r-cab-total')!.textContent= totalCab.toLocaleString('es-BO') + ' cab.'
-    document.getElementById('r-cap-max')!.textContent  = capMax.toFixed(1) + ' UA'
-    document.getElementById('r-sup-rec')!.textContent  = supRec.toFixed(0) + ' ha'
+    // Panel
+    document.getElementById('r-carga')!.textContent    = fmt(carga, 2)
+    document.getElementById('r-kgha')!.textContent     = fmt(kgHa, 0)
+    document.getElementById('r-ua-total')!.textContent = fmt(totalUA, 2) + ' UA'
+    document.getElementById('r-kg-total')!.textContent = fmt(totalKg) + ' kg'
+    document.getElementById('r-cab-total')!.textContent= fmt(totalCab) + ' cab.'
+    document.getElementById('r-cap-max')!.textContent  = fmt(capMax, 1) + ' UA'
+    document.getElementById('r-sup-rec')!.textContent  = fmt(supRec, 0) + ' ha'
 
-    // Bar indicator (max mapped to 1.5 UA/ha = 100%)
+    // Bar
     const pct = Math.min(100, (carga / 1.5) * 100)
     ;(document.getElementById('r-bar-indicator') as HTMLElement).style.left = pct + '%'
 
     // Badge + ajuste
-    const badge   = document.getElementById('r-badge')!
-    const panelAj = document.getElementById('panel-ajuste')!
-    const ajuste  = document.getElementById('r-ajuste')!
+    const badge    = document.getElementById('r-badge')!
+    const panelAj  = document.getElementById('panel-ajuste')!
+    const ajuste   = document.getElementById('r-ajuste')!
 
     if (totalUA === 0 || ha === 0) {
       badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-potrero-800 text-earth-400'
@@ -320,30 +345,29 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL
 
     if (carga < BENCH_MIN) {
       badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-900/60 text-amber-300'
-      badge.textContent = `⬇ Sub-carga · ${carga.toFixed(2)} UA/ha`
+      badge.textContent = `⬇ Sub-carga · ${fmt(carga, 2)} UA/ha`
       panelAj.classList.remove('hidden')
       const puedeAgregar = Math.floor((capMax - totalUA) / 1.0)
-      ajuste.textContent = `Tu campo tiene capacidad para ${capMax.toFixed(1)} UA totales. Con tu rodeo actual (${totalUA.toFixed(1)} UA) podrías incorporar aproximadamente ${puedeAgregar} vacas más sin superar la carga óptima.`
+      ajuste.textContent = `Tu campo tiene capacidad para ${fmt(capMax, 1)} UA totales. Con tu rodeo actual (${fmt(totalUA, 1)} UA) podrías incorporar aproximadamente ${puedeAgregar} vacas más sin superar la carga óptima.`
     } else if (carga <= BENCH_MAX) {
       badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-green-900/60 text-green-300'
-      badge.textContent = `✓ Carga óptima · ${carga.toFixed(2)} UA/ha`
+      badge.textContent = `✓ Carga óptima · ${fmt(carga, 2)} UA/ha`
       panelAj.classList.remove('hidden')
-      ajuste.textContent = `Estás dentro del rango óptimo para el trópico boliviano (${BENCH_MIN}–${BENCH_MAX} UA/ha). Tu campo y tu rodeo están bien equilibrados.`
+      ajuste.textContent = `Estás dentro del rango óptimo (${BENCH_MIN}–${BENCH_MAX} UA/ha). Tu campo y tu rodeo están bien equilibrados.`
     } else {
       badge.className   = 'mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-red-900/60 text-red-300'
-      badge.textContent = `⬆ Sobre-carga · ${carga.toFixed(2)} UA/ha`
+      badge.textContent = `⬆ Sobre-carga · ${fmt(carga, 2)} UA/ha`
       panelAj.classList.remove('hidden')
       const excesoUA   = totalUA - capMax
       const reducirCab = Math.ceil(excesoUA / 1.0)
-      ajuste.textContent = `Excedés la carga óptima en ${excesoUA.toFixed(1)} UA. Para volver al rango recomendado deberías reducir el rodeo en ~${reducirCab} vacas equivalentes, o ampliar la superficie ganadera a ${supRec.toFixed(0)} ha.`
+      ajuste.textContent = `Excedés la carga óptima en ${fmt(excesoUA, 1)} UA. Para volver al rango recomendado reducí ~${reducirCab} vacas equivalentes, o ampliá la superficie a ${fmt(supRec, 0)} ha.`
     }
   }
 
-  // ── Init ─────────────────────────────────────────────
   document.getElementById('btn-add')!.addEventListener('click', () => addRow())
   document.getElementById('f-hectareas')!.addEventListener('input', calc)
 
-  // Seed with typical herd
+  // Rodeo inicial de ejemplo
   addRow('vaca',      150)
   addRow('vaca_cria',  80)
   addRow('nov_2',      40)
