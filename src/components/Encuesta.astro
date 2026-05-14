@@ -72,11 +72,11 @@
         </label>
 
         <label class="block">
-          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">Superficie ganadera aproximada</span>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {['<200 ha', '200-1.000', '1.000-5.000', '>5.000 ha'].map((opt) => (
+          <span class="block text-sm font-semibold text-potrero-900 mb-1.5">¿Cuántas cabezas manejás?</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {['0-500', '500-1.000', '1.000-2.000', '2.000-5.000', '5.000-10.000', '>10.000'].map((opt) => (
               <label class="flex items-center justify-center px-3 py-2.5 rounded-lg border border-earth-200 bg-white cursor-pointer hover:border-earth-400 has-[:checked]:border-potrero-600 has-[:checked]:bg-potrero-50 transition text-sm font-medium text-potrero-800">
-                <input type="radio" name="superficie" value={opt} class="sr-only" />
+                <input type="radio" name="cabezas" value={opt} class="sr-only" />
                 {opt}
               </label>
             ))}
@@ -164,7 +164,7 @@
             nombre: data.nombre,
             whatsapp: data.whatsapp,
             zona: data.zona,
-            superficie: data.superficie,
+            cabezas: data.cabezas,
             gestion_actual: data.gestion_actual,
             dolor: data.dolor,
             aviso_lanzamiento: data.aviso_lanzamiento === 'on',
@@ -188,7 +188,7 @@
               Nombre: data.nombre || '(sin nombre)',
               WhatsApp: data.whatsapp,
               Zona: data.zona || '—',
-              Superficie: data.superficie || '—',
+              Cabezas: data.cabezas || '—',
               'Gestión actual': data.gestion_actual || '—',
               'Qué le cuesta más': data.dolor || '—',
               'Quiere aviso de lanzamiento': data.aviso_lanzamiento === 'on' ? 'Sí' : 'No',
@@ -218,7 +218,7 @@
           `Me sumé a la lista por la encuesta de la web.`,
           '',
           zonaTxt    ? `📍 Zona: ${zonaTxt}` : '',
-          data.superficie     ? `📐 Superficie: ${data.superficie}` : '',
+          data.cabezas        ? `🐄 Cabezas: ${data.cabezas}` : '',
           gestionTxt ? `📊 Hoy llevo mis números con: ${gestionTxt}` : '',
           data.dolor          ? `❗ Lo que más me cuesta: ${data.dolor}` : '',
         ].filter(Boolean).join('\n')
