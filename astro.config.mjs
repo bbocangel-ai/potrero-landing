@@ -1,11 +1,9 @@
 import { defineConfig } from 'astro/config'
 import tailwind from '@astrojs/tailwind'
-
 export default defineConfig({
   integrations: [tailwind()],
-  // GitHub Pages URL — se actualiza automáticamente si después comprás dominio propio
-  site: 'https://bbocangel-ai.github.io',
-  base: '/potrero-landing/',
+  site: 'https://potrerolatam.com',
+  base: '/',
   trailingSlash: 'ignore',
   build: {
     inlineStylesheets: 'auto',
